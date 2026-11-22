@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="manifest" href="manifest.webmanifest"><link rel="icon" type="image/png" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="theme-color" content="#f1f1f9"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="RideMate"><meta name="description" content="RideMate: pantau perawatan dan servis motor pribadi.">
+<title>RideMate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--tx:#14181f;--mu:#6b7280;--bd:#e5e7eb;--ac:#2563eb;--ok:#16a34a;--wa:#d97706;--er:#dc2626;--okb:#dcfce7;--wab:#fef3c7;--erb:#fee2e2;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1116;--card:#171b22;--tx:#eef0f3;--mu:#9aa3af;--bd:#262c36;--okb:#12301d;--wab:#3a2c0b;--erb:#3b1414;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e1116;--card:#171b22;--tx:#eef0f3;--mu:#9aa3af;--bd:#262c36;--okb:#12301d;--wab:#3a2c0b;--erb:#3b1414;color-scheme:dark}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--tx);font:15px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh}
+button,input,select,textarea{font:inherit;color:inherit}
+.wrap{max-width:560px;margin:0 auto;padding:16px 16px 96px}
+h1,h2,h3{margin:0;letter-spacing:-.01em}h2{font-size:20px}h3{font-size:15px}
+.mu{color:var(--mu);font-size:13px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px;margin-top:12px}
+.btn{background:var(--ac);color:#fff;border:0;border-radius:10px;padding:11px 16px;font-weight:600;cursor:pointer}
+.btn.g{background:transparent;color:var(--tx);border:1px solid var(--bd)}
+.btn.w{width:100%}
+label{display:block;font-size:13px;color:var(--mu);margin:12px 0 4px}
+input,select,textarea{width:100%;background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:10px 12px}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--ac);outline-offset:-1px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:20px}
+.logo i{width:32px;height:32px;border-radius:9px;background:var(--ac);display:grid;place-items:center;color:#fff;font-style:normal;font-size:16px}
+.auth{max-width:380px;margin:0 auto;padding:12vh 20px 40px}
+.tabs2{display:flex;background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:3px;margin:20px 0 4px}
+.tabs2 button{flex:1;border:0;background:none;padding:8px;border-radius:8px;cursor:pointer;color:var(--mu);font-weight:600}
+.tabs2 button.on{background:var(--card);color:var(--tx);box-shadow:0 1px 2px #0002}
+.err{color:var(--er);font-size:13px;margin-top:8px;min-height:18px}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--bd);display:flex;justify-content:center;padding-bottom:env(safe-area-inset-bottom,0px)}
+nav div{display:flex;max-width:560px;width:100%}
+nav button{flex:1;border:0;background:none;padding:10px 4px;cursor:pointer;color:var(--mu);font-size:11px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:2px}
+nav button span{font-size:18px}nav button.on{color:var(--ac)}
+.top{display:flex;justify-content:space-between;align-items:center;padding:6px 0}
+.score{display:flex;align-items:center;gap:16px}
+.ring{--p:0;width:92px;height:92px;border-radius:50%;background:conic-gradient(var(--c) calc(var(--p)*1%),var(--bd) 0);display:grid;place-items:center;flex:none}
+.ring b{width:74px;height:74px;border-radius:50%;background:var(--card);display:grid;place-items:center;font-size:24px}
+.pill{display:inline-block;padding:2px 9px;border-radius:99px;font-size:12px;font-weight:600}
+.s-ok{background:var(--okb);color:var(--ok)}.s-soon{background:var(--wab);color:var(--wa)}.s-over{background:var(--erb);color:var(--er)}
+.bar{height:6px;background:var(--bd);border-radius:9px;overflow:hidden;margin:8px 0 4px}.bar i{display:block;height:100%;border-radius:9px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.stat{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px}.stat b{font-size:20px;display:block}
+.item{padding:14px 0;border-top:1px solid var(--bd)}.item:first-child{border-top:0}
+.chk{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--bd)}.chk input{width:20px;height:20px;accent-color:var(--ac)}
+.modal{position:fixed;inset:0;background:#0008;display:flex;align-items:flex-end;justify-content:center;z-index:9}
+.sheet{background:var(--card);width:100%;max-width:560px;border-radius:18px 18px 0 0;padding:18px 18px calc(18px + env(safe-area-inset-bottom,0px));max-height:90vh;overflow:auto}
+.sheet .chk input{width:20px;flex:none}
+.hide{display:none}.ic{width:22px;height:22px;flex:none}.btn .ic{width:18px;height:18px;vertical-align:middle}.btn.g .ic{display:block}.mi{display:flex;align-items:center;gap:14px;width:100%;background:none;border:0;border-top:1px solid var(--bd);padding:14px 0;text-align:left;cursor:pointer}.mi:first-child{border-top:0}.mi>span{flex:1}.mi .ic{color:var(--mu)}.mi .ic:last-child{width:18px}summary{cursor:pointer}.cols{display:flex;gap:8px;height:160px;align-items:stretch}.col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px}.stk{width:100%;flex:1;display:flex;flex-direction:column;justify-content:flex-end}.stk i{display:block;width:100%}
+h2{font-size:22px}.wrap{max-width:640px;padding-top:8px}nav div{max-width:640px}
+.card{border-radius:18px;padding:18px;box-shadow:0 1px 2px rgba(16,24,40,.04),0 10px 28px -14px rgba(16,24,40,.18)}
+input,select,textarea{padding:12px 14px;border-radius:12px;font-size:16px}
+.btn{border-radius:12px;box-shadow:0 1px 2px #0002;transition:transform .15s,opacity .15s}.btn:active{transform:scale(.97)}.btn.g{box-shadow:none}.lnk{background:none;border:0;color:var(--er);font-size:13px;cursor:pointer;padding:4px 0}.dl{text-align:right;margin:-6px 0 6px}
+.logo i{font-size:0;background:var(--ac) url("data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%2024%2024%27%20fill=%27none%27%20stroke=%27%23fff%27%20stroke-width=%271.8%27%20stroke-linecap=%27round%27%20stroke-linejoin=%27round%27%3E%3Ccircle%20cx=%275.5%27%20cy=%2717.5%27%20r=%273%27/%3E%3Ccircle%20cx=%2718.5%27%20cy=%2717.5%27%20r=%273%27/%3E%3Cpath%20d=%27M18.5%2017.5L16.8%2010.8M16.8%2010.2L15.2%209.4M5.5%2017.5l3.5-2%27/%3E%3Cpath%20fill=%27%23fff%27%20stroke=%27none%27%20d=%27M6%2014Q7%2012%209.5%2012L12%2012Q13%2010.5%2015%2010.3L16.5%2010.5L16%2013.5L14.5%2014L14.5%2016L10.5%2016L10.5%2014.5L9%2014Q7.5%2014.5%206%2014Z%27/%3E%3C/svg%3E") center/27px no-repeat}
+.auth{max-width:420px;padding:20px 20px 40px}.fc{margin-top:0}
+.brand{background:linear-gradient(135deg,#171a21,#2b303b);color:#fff;border-radius:22px;padding:26px 24px;margin-bottom:16px;position:relative;overflow:hidden}.brand::after{content:"";position:absolute;right:-50px;top:-50px;width:180px;height:180px;border-radius:50%;background:var(--ac);opacity:.28;filter:blur(30px)}
+.brand h1{font-size:28px;line-height:1.2;margin:26px 0 10px}.brand p{margin:0 0 18px;opacity:.7}.feat{display:flex;flex-wrap:wrap;gap:8px;position:relative;z-index:1}.feat span{display:inline-flex;align-items:center;gap:6px;background:#ffffff1a;border-radius:99px;padding:6px 12px;font-size:12px}.feat .ic{width:14px;height:14px}
+.hero{background:linear-gradient(135deg,#171a21,#2b303b);color:#fff;border-radius:22px;padding:20px;margin-top:12px;box-shadow:0 14px 30px -16px rgba(0,0,0,.5)}.hero h2{color:#fff;margin:2px 0 8px}.hl{font-size:11px;letter-spacing:.08em;text-transform:uppercase;opacity:.6}
+.plate{display:inline-block;border:1.5px solid #fff6;border-radius:6px;padding:2px 10px;font:700 13px ui-monospace,Menlo,monospace;letter-spacing:.08em}
+.hero .ring{width:84px;height:84px;background:conic-gradient(var(--c) calc(var(--p)*1%),#ffffff26 0)}.hero .ring b{width:68px;height:68px;font-size:22px;background:#1d2129;color:#fff}
+.hs{display:flex;gap:10px;margin-top:18px}.hs>div{flex:1;background:#ffffff14;border-radius:12px;padding:10px 12px}.hs span{display:block;font-size:11px;opacity:.6;text-transform:uppercase;letter-spacing:.05em}.hs b{font-size:16px}
+.stat{border-radius:16px;box-shadow:0 1px 2px rgba(16,24,40,.04)}.stat .mu{font-size:11px;text-transform:uppercase;letter-spacing:.05em}.stat b{font-size:21px;margin-top:2px}
+.item .row{gap:12px;align-items:center}.gr{flex:1;min-width:0}.tile{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;flex:none}.t-ok{background:var(--okb);color:var(--ok)}.t-soon{background:var(--wab);color:var(--wa)}.t-over{background:var(--erb);color:var(--er)}.bar+.mu{display:none}.bar{height:5px}
+nav{backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);background:color-mix(in srgb,var(--card) 90%,transparent)}nav button{gap:4px;padding:8px 4px 10px}nav button .ic{box-sizing:content-box;width:20px;height:20px;padding:4px 16px;border-radius:99px;transition:background .2s}nav button.on .ic{background:color-mix(in srgb,var(--ac) 15%,transparent)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ac:#3b82f6}}:root[data-theme="dark"]{--ac:#3b82f6}
+body{background:radial-gradient(900px 380px at 50% -140px,color-mix(in srgb,var(--ac) 16%,transparent),transparent) no-repeat,var(--bg)}
+.btn{background:linear-gradient(135deg,#3b82f6,#1d4ed8)}.btn.g{background:transparent}.bar i{transition:width .4s}
+.top{flex-wrap:wrap;gap:10px}.ph{display:flex;align-items:center;gap:12px}.ph h2{font-size:21px;line-height:1.2}.ph .mu{margin-top:1px}
+.pi{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;flex:none;background:color-mix(in srgb,var(--ac) 12%,transparent);color:var(--ac)}.pi.t-ok{background:var(--okb);color:var(--ok)}.pi.t-soon{background:var(--wab);color:var(--wa)}.pi.t-over{background:var(--erb);color:var(--er)}
+.hero{background:linear-gradient(135deg,#1e3a8a,#2563eb 60%,#3b82f6);position:relative;overflow:hidden}.hero::before{content:"";position:absolute;right:-40px;bottom:-60px;width:200px;height:200px;border-radius:50%;background:#fff;opacity:.08}.hero>*{position:relative}.hero .ring{background:conic-gradient(var(--c) calc(var(--p)*1%),#ffffff33 0)}.hero .ring b{background:rgba(15,23,42,.6)}
+.brand{background:linear-gradient(135deg,#0f172a,#1e3a8a)}
+.stat{position:relative;padding-top:16px}.stat::before{content:"";position:absolute;left:14px;top:0;width:28px;height:3px;border-radius:0 0 4px 4px;background:var(--ac)}
+.stack .item{background:var(--card);border:1px solid var(--bd);border-left:4px solid var(--ok);border-radius:16px;padding:14px;margin-top:10px;box-shadow:0 1px 2px rgba(16,24,40,.04),0 8px 20px -14px rgba(16,24,40,.2)}.stack .item:has(.t-soon){border-left-color:var(--wa)}.stack .item:has(.t-over){border-left-color:var(--er)}.stack .dl{margin:-2px 6px 0}
+.tl .item{position:relative;padding-left:24px;border-top:0}.tl .item::before{content:"";position:absolute;left:4px;top:26px;bottom:-14px;width:2px;background:var(--bd)}.tl .item::after{content:"";position:absolute;left:0;top:18px;width:10px;height:10px;border-radius:50%;background:var(--ac);box-shadow:0 0 0 4px color-mix(in srgb,var(--ac) 18%,transparent)}.tl .item:last-child::before{display:none}
+.mi>.ic:first-child{box-sizing:content-box;padding:9px;border-radius:12px;background:color-mix(in srgb,var(--ac) 12%,transparent);color:var(--ac)}
+.stk i{border-radius:6px 6px 0 0}.col:last-child .mu{color:var(--ac);font-weight:700}
+summary{list-style:none;display:flex;justify-content:space-between;align-items:center}summary::-webkit-details-marker{display:none}summary::after{content:"+";color:var(--ac);font-size:22px;line-height:1}details[open] summary::after{content:"–"}
+.prof{display:flex;align-items:center;gap:14px}.av{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#3b82f6,#1d4ed8);color:#fff;display:grid;place-items:center;font-size:22px;font-weight:700;flex:none}
+.chk{padding:12px 0}.chk input:checked+label{color:var(--mu)!important;text-decoration:line-through}
+.acts{display:flex;gap:8px;align-items:center;margin-top:12px;flex-wrap:wrap}.ab{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:10px;font-size:13px;font-weight:600;text-decoration:none;border:1px solid var(--bd);color:var(--tx);background:var(--card)}.ab .ic{width:16px;height:16px;color:var(--ac)}.acts .lnk{margin-left:auto}
+.chips{display:flex;gap:8px;margin:14px 0 4px;flex-wrap:wrap}.chip{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:99px;border:1px solid var(--bd);background:var(--bg);font-size:13px;font-weight:600;color:var(--mu);cursor:pointer}.chip .ic{width:16px;height:16px}.chip.on{background:color-mix(in srgb,var(--ac) 14%,transparent);color:var(--ac);border-color:color-mix(in srgb,var(--ac) 40%,transparent)}
+.tp{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-top:1px solid var(--bd)}.tp:first-of-type{margin-top:6px}.tp h4{margin:0 0 2px;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--mu)}.tp p{margin:0;font-size:14px}
+.inst{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,color-mix(in srgb,var(--ac) 12%,var(--card)),var(--card))}.inst img{width:52px;height:52px;border-radius:14px;flex:none;box-shadow:0 6px 14px -6px rgba(29,78,216,.6)}.inst .btn{flex:none}
+/* Flat minimalist */
+:root{--ac0:#1e88e5;--ac:var(--ac0);--onac:#fff;--bg:#fff;--card:#f4f5f7;--bd:#e6e8ec;--tx:#16181d;--mu:#6b7280;--okb:#e3f5e6;--wab:#fff3dc;--erb:#fde7e7;--ok:#2e7d32;--wa:#b26a00;--er:#c62828;--e1:none;--e2:none;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ac:color-mix(in srgb,var(--ac0) 58%,#fff);--onac:#0e1014;--bg:#0e1014;--card:#171a20;--bd:#252a33;--tx:#e9ebef;--mu:#8b93a1;--okb:#14301b;--wab:#3a2a0a;--erb:#3d1616;--ok:#66bb6a;--wa:#ffb74d;--er:#ef5350;color-scheme:dark}}
+:root[data-theme="dark"]{--ac:color-mix(in srgb,var(--ac0) 58%,#fff);--onac:#0e1014;--bg:#0e1014;--card:#171a20;--bd:#252a33;--tx:#e9ebef;--mu:#8b93a1;--okb:#14301b;--wab:#3a2a0a;--erb:#3d1616;--ok:#66bb6a;--wa:#ffb74d;--er:#ef5350;color-scheme:dark}
+body{background:var(--bg);color:var(--tx);font-family:Roboto,"Segoe UI",Inter,system-ui,-apple-system,sans-serif;line-height:1.55}
+h1,h2,h3{letter-spacing:0;font-weight:600}h2{font-size:24px}.wrap{padding:16px 20px 100px}.mu{font-size:13px}
+.rp{display:none}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:4;background:var(--bg);margin:0 -20px 8px;padding:12px 20px}
+.ph .pi{display:none}.ph h2{font-size:24px}
+.card,.stat,.inst{background:var(--card);border:0;border-radius:12px;box-shadow:none}
+.card{margin-top:16px;padding:18px}.grid{gap:12px}.stat{padding:16px}.stat::before{display:none}.stat .mu{text-transform:none;letter-spacing:0;font-size:13px}.stat b{font-size:22px;font-weight:600}
+.stack .item{background:none;border:0;border-bottom:1px solid var(--bd);border-radius:0;box-shadow:none;margin-top:0;padding:16px 0}
+input:not([type=checkbox]),select,textarea{background:var(--card);border:1.5px solid transparent;border-radius:10px;box-shadow:none;padding:13px 14px;color:var(--tx)}
+input:not([type=checkbox]):focus,select:focus,textarea:focus{outline:none;border-color:var(--ac);box-shadow:none}
+select option{background:var(--card);color:var(--tx)}
+input[type=checkbox]{-webkit-appearance:none;appearance:none;width:22px;height:22px;padding:0;border:2px solid var(--mu);border-radius:4px;background:transparent;box-shadow:none;cursor:pointer;flex:none;display:inline-grid;place-content:center}
+input[type=checkbox]:checked{background:var(--ac);border-color:var(--ac);box-shadow:none}
+input[type=checkbox]:checked::after{content:"";width:5px;height:10px;border:solid var(--onac);border-width:0 2px 2px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.btn{background:var(--ac);color:var(--onac);border:0;border-radius:10px;box-shadow:none;padding:12px 20px;font-weight:600;transition:opacity .15s}
+.btn:hover{box-shadow:none}.btn:active{opacity:.85;filter:none;box-shadow:none;transform:none}
+.btn.g{background:var(--card);color:var(--tx);border:0;box-shadow:none}.btn.g:hover{box-shadow:none}.btn.g:active{opacity:.7;filter:none}
+.lnk{color:var(--er)}
+.ab{background:var(--card);border:0;border-radius:8px;box-shadow:none;color:var(--tx)}.ab .ic{color:var(--ac)}.ab:active{box-shadow:none;opacity:.7}
+.ibtn{width:40px;height:40px;border-radius:10px;border:0;background:var(--card);color:var(--tx);display:grid;place-items:center;cursor:pointer;flex:none}
+.chip{background:var(--card);border:0;border-radius:8px;box-shadow:none;color:var(--mu);padding:8px 14px}
+.chip.on{background:var(--ac);border:0;color:var(--onac);box-shadow:none}
+.pi,.pi.t-ok,.pi.t-soon,.pi.t-over,.tile,.tile.t-ok,.tile.t-soon,.tile.t-over{width:28px;height:28px;background:none;box-shadow:none;border-radius:0;color:var(--ac)}
+.pi.t-ok,.tile.t-ok{color:var(--ok)}.pi.t-soon,.tile.t-soon{color:var(--wa)}.pi.t-over,.tile.t-over{color:var(--er)}
+.mi>.ic:first-child{background:none;box-shadow:none;padding:0;color:var(--ac)}
+.pill{background:none;box-shadow:none;padding:0;border-radius:0;font-weight:600;font-size:13px;display:inline-flex;align-items:center}.pill::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;margin-right:6px}
+.s-ok{background:none;color:var(--ok)}.s-soon{background:none;color:var(--wa)}.s-over{background:none;color:var(--er)}
+.bar{height:4px;background:var(--bd);box-shadow:none}
+.ring{background:conic-gradient(var(--c) calc(var(--p)*1%),var(--bd) 0)}.ring b{box-shadow:none;background:var(--card);color:var(--tx)}
+.hero{background:var(--card);color:var(--tx);border-radius:12px;box-shadow:none}.hero::before{display:none}.hero h2{color:var(--tx)}.hl{opacity:1;color:var(--mu)}
+.hero .plate{border-color:var(--bd);color:var(--tx)}
+.hs>div{background:var(--bg)}
+.hero .ring{background:conic-gradient(var(--c) calc(var(--p)*1%),var(--bd) 0)}.hero .ring b{background:var(--card);color:var(--tx)}
+.brand{background:none;color:var(--tx);border-radius:0;box-shadow:none;padding:8px 0 4px}.brand::after{display:none}.brand p{opacity:1;color:var(--mu)}.brand .logo i{background-color:var(--ac);box-shadow:none}.feat span{background:var(--card);color:var(--tx)}
+.card.fc{background:none;border:0;padding:0;margin-top:12px}
+.logo i{box-shadow:none;border-radius:8px}.av{background:var(--ac);color:var(--onac);box-shadow:none}
+.inst{background:var(--card)}.inst img{box-shadow:none;border-radius:12px}
+.tabs2{background:none;border:0;border-bottom:1px solid var(--bd);border-radius:0;box-shadow:none;padding:0}.tabs2 button{border-radius:0;padding:10px}.tabs2 button.on{background:none;box-shadow:none;color:var(--ac);border-bottom:2px solid var(--ac);margin-bottom:-1px}
+.sheet{background:var(--bg);border-radius:16px 16px 0 0;box-shadow:none}.sheet::before{display:none}
+nav{left:0;right:0;transform:none;width:auto;max-width:none;bottom:0;border:0;border-top:1px solid var(--bd);border-radius:0;background:var(--bg);box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;padding-bottom:env(safe-area-inset-bottom,0px)}
+nav button{padding:10px 4px 8px;font-weight:500;color:var(--mu)}nav button .ic{padding:2px 0;border-radius:0;background:none}nav button.on{color:var(--ac)}nav button.on .ic{background:none;box-shadow:none;color:var(--ac)}
+.tl .item::before{background:var(--bd);opacity:1}.tl .item::after{box-shadow:none}.stk i{border-radius:3px 3px 0 0}
+.seg{display:flex;background:var(--card);border:0;border-radius:10px;overflow:hidden}.seg button{flex:1;border:0;background:transparent;padding:10px 6px;display:flex;align-items:center;justify-content:center;gap:6px;color:var(--mu);cursor:pointer;font-weight:600;font-size:13px}.seg button+button{border-left:0}.seg button.on{background:var(--ac);color:var(--onac)}.seg .ic{width:18px;height:18px}
+.sw{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:12px}.swb{width:40px;height:40px;border-radius:50%;border:0;background:var(--sw);color:#fff;display:grid;place-items:center;cursor:pointer;box-shadow:none}.swb.on{box-shadow:none;outline:2px solid var(--sw);outline-offset:3px}.swb .ic{width:20px;height:20px}
+.chips{margin:12px 0 4px}.tp{border-top:1px solid var(--bd)}
+.card .chip,.card .seg,.card .ab,.card .btn.g,.card .ibtn{background:var(--bg)}.card .chip.on,.card .seg button.on{background:var(--ac)}.card .seg button{background:transparent}.card .seg button.on{background:var(--ac)}
+.card input:not([type=checkbox]),.card select,.card textarea{background:var(--bg)}
+.card .pi,.card .tile{background:none}
+.hero{background:var(--ac);color:var(--onac)}.hero::before{display:none}.hero h2{color:var(--onac)}.hero .hl{color:var(--onac);opacity:.75}
+.hero .plate{border-color:color-mix(in srgb,var(--onac) 55%,transparent);color:var(--onac)}
+.hero .hs>div{background:color-mix(in srgb,var(--onac) 16%,transparent)}
+.hero .ring{background:conic-gradient(var(--onac) calc(var(--p)*1%),color-mix(in srgb,var(--onac) 25%,transparent) 0)}
+.hero .ring b{background:var(--ac);color:var(--onac)}
+.top input[type=search]{flex:1;min-width:0;-webkit-appearance:none;appearance:none}
+.sh{margin:20px 0 6px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mu);font-weight:600}
+.hm{display:flex;align-items:center;gap:14px;min-width:0}.hm>div{min-width:0}
+.hero h2{font-size:20px;line-height:1.25;margin:2px 0 8px}.hero .ring{width:72px;height:72px}.hero .ring b{width:58px;height:58px;font-size:20px}
+.avt{position:relative;width:64px;height:64px;border-radius:16px;border:0;padding:0;overflow:hidden;flex:none;cursor:pointer;background:color-mix(in srgb,var(--onac) 18%,transparent);color:var(--onac);display:grid;place-items:center}
+.avt img{width:100%;height:100%;object-fit:cover;display:block}.avt .ic{width:30px;height:30px}
+.avt .cam{position:absolute;right:0;bottom:0;width:22px;height:22px;border-radius:8px 0 0 0;background:color-mix(in srgb,var(--onac) 88%,transparent);color:var(--ac);display:grid;place-items:center}.avt .cam .ic{width:14px;height:14px}
+.btn:disabled{opacity:.45;cursor:default}
+.avt>.ic{width:46px;height:46px}
+/* Elegant fintech */
+:root{--ac0:#2f5bff;--ac:var(--ac0);--onac:#fff;--bg:#f1f1f9;--card:#fff;--bd:#ececf4;--tx:#1f2340;--mu:#8d90a6;--okb:#e3f6ec;--wab:#fff2d9;--erb:#ffe5e0;--ok:#2fa866;--wa:#d98c10;--er:#ec5a45;--dk:#2a2d3a;--sh:0 10px 30px -14px rgba(46,60,140,.25);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ac:color-mix(in srgb,var(--ac0) 62%,#fff);--onac:#0c0f1f;--bg:#0e1020;--card:#171a2e;--bd:#262a46;--tx:#eceefa;--mu:#8d93b0;--okb:#14382a;--wab:#3b2c0d;--erb:#3d1a18;--ok:#5fd394;--wa:#f2b24d;--er:#ff8272;--dk:#222640;--sh:0 10px 30px -14px rgba(0,0,0,.65);color-scheme:dark}}
+:root[data-theme="dark"]{--ac:color-mix(in srgb,var(--ac0) 62%,#fff);--onac:#0c0f1f;--bg:#0e1020;--card:#171a2e;--bd:#262a46;--tx:#eceefa;--mu:#8d93b0;--okb:#14382a;--wab:#3b2c0d;--erb:#3d1a18;--ok:#5fd394;--wa:#f2b24d;--er:#ff8272;--dk:#222640;--sh:0 10px 30px -14px rgba(0,0,0,.65);color-scheme:dark}
+body{background:var(--bg);color:var(--tx);font-family:Poppins,"Segoe UI",Roboto,system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.55}
+#app{position:relative;z-index:1}
+h1,h2,h3{color:var(--tx);font-weight:600;letter-spacing:-.01em}h2,.ph h2{font-size:20px}h3{font-size:14.5px}.mu{color:var(--mu);font-size:12.5px}
+.wrap{padding:16px 20px 130px}
+.ibtn{width:42px;height:42px;border-radius:14px;background:var(--card);color:var(--tx);box-shadow:var(--sh)}
+.card,.stat,.inst{background:var(--card);border:0;border-radius:24px;box-shadow:var(--sh)}
+.card{margin-top:18px;padding:20px}.grid{gap:14px}.stat{border-radius:20px;padding:16px}.stat .mu{font-size:12px}.stat b{font-size:19px;font-weight:600}
+.hero{position:relative;overflow:hidden;color:var(--onac);border:0;border-radius:26px;padding:20px;margin-top:14px;box-shadow:var(--sh);background:radial-gradient(circle at 104% 112%,rgba(0,0,0,.16) 0 34%,transparent 34.4%),radial-gradient(circle at 104% 112%,rgba(0,0,0,.10) 0 58%,transparent 58.4%),radial-gradient(circle at 50% -42%,rgba(255,255,255,.26) 0 46%,transparent 46.4%),radial-gradient(circle at 50% -42%,rgba(255,255,255,.14) 0 68%,transparent 68.4%),var(--ac)}
+.hero::before{display:none}.hero h2{color:var(--onac);font-size:18px;line-height:1.25;margin:2px 0 6px}
+.hero .hl{color:var(--onac);opacity:.8;font-size:11px;letter-spacing:.07em;text-transform:uppercase}
+.hero .plate{border:1.5px solid color-mix(in srgb,var(--onac) 55%,transparent);color:var(--onac)}
+.hc{text-align:center;margin-top:24px}.hbig{font-size:34px;font-weight:700;line-height:1.1;margin:4px 0 16px;letter-spacing:-.02em}
+.hbar{height:4px;border-radius:4px;background:color-mix(in srgb,var(--onac) 28%,transparent);overflow:hidden}.hbar i{display:block;height:100%;background:var(--onac);border-radius:4px}
+.hcap{font-size:11.5px;margin-top:10px;opacity:.85}
+.avt{width:56px;height:56px;border-radius:16px}.avt>.ic{width:38px;height:38px}
+.acts2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+.act{display:flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:16px;background:var(--dk);color:#fff;padding:16px 10px;font:500 13px Poppins,system-ui,sans-serif;cursor:pointer}.act .ic{width:18px;height:18px}.act:active{opacity:.85}
+.card.sc{position:relative;border-radius:28px 28px 24px 24px;padding-top:26px}
+.card.sc::before{content:"";position:absolute;top:9px;left:50%;transform:translateX(-50%);width:36px;height:4px;border-radius:4px;background:var(--bd)}
+.card.sc>h3{text-align:center;font-size:16px;margin-bottom:4px}
+.stack .item{background:var(--card);border:0;border-radius:22px;margin-top:14px;padding:16px;box-shadow:var(--sh)}
+.pi,.tile,.card .pi,.card .tile{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;flex:none;background:color-mix(in srgb,var(--ac) 14%,var(--card));color:var(--ac)}
+.pi.t-ok,.tile.t-ok,.card .pi.t-ok,.card .tile.t-ok{background:var(--okb);color:var(--ok)}
+.pi.t-soon,.tile.t-soon,.card .pi.t-soon,.card .tile.t-soon{background:var(--wab);color:var(--wa)}
+.pi.t-over,.tile.t-over,.card .pi.t-over,.card .tile.t-over{background:var(--erb);color:var(--er)}
+.pi .ic,.tile .ic{width:20px;height:20px}
+.ph .pi{display:none}
+.mi>.ic:first-child{box-sizing:content-box;width:20px;height:20px;padding:11px;border-radius:50%;background:color-mix(in srgb,var(--ac) 14%,var(--card));color:var(--ac)}
+.bar{height:4px;background:var(--bd);border-radius:4px}
+.btn{background:var(--ac);color:var(--onac);border-radius:12px;padding:12px 20px;font:500 13.5px Poppins,system-ui,sans-serif;box-shadow:0 8px 16px -8px color-mix(in srgb,var(--ac) 70%,transparent)}
+.btn.g,.card .btn.g{background:var(--bg);color:var(--tx);box-shadow:none}
+input:not([type=checkbox]),select,textarea,.card input:not([type=checkbox]),.card select,.card textarea{background:var(--bg);border:1.5px solid transparent;border-radius:14px;padding:13px 16px;font:400 14px Poppins,system-ui,sans-serif;color:var(--tx)}
+input:not([type=checkbox]):focus,select:focus,textarea:focus{border-color:var(--ac)}
+.chip,.card .chip{background:var(--bg);color:var(--mu);border-radius:12px;font-family:inherit}.chip.on,.card .chip.on{background:var(--ac);color:var(--onac)}
+.seg,.card .seg{background:var(--bg);border-radius:14px}.seg button.on,.card .seg button.on{background:var(--ac);color:var(--onac)}
+nav{left:50%;right:auto;transform:translateX(-50%);width:calc(100% - 28px);max-width:612px;bottom:calc(12px + env(safe-area-inset-bottom,0px));border:0;border-radius:24px;background:var(--card);box-shadow:0 14px 34px -12px rgba(46,60,140,.32);padding:0}
+nav button{padding:12px 4px 10px;font:500 11px Poppins,system-ui,sans-serif;color:var(--mu)}nav button .ic{width:22px;height:22px;padding:0;background:none}nav button.on{color:var(--ac)}nav button.on .ic{background:none;color:var(--ac)}
+.sheet{background:var(--card);border-radius:28px 28px 0 0}.sheet::before{display:block;content:"";width:36px;height:4px;border-radius:4px;background:var(--bd);margin:-6px auto 16px}
+.brand{position:relative;overflow:hidden;color:var(--onac);border-radius:28px;padding:26px 24px 22px;box-shadow:var(--sh);background:radial-gradient(circle at 104% 112%,rgba(0,0,0,.16) 0 34%,transparent 34.4%),radial-gradient(circle at 104% 112%,rgba(0,0,0,.10) 0 58%,transparent 58.4%),radial-gradient(circle at 50% -42%,rgba(255,255,255,.26) 0 46%,transparent 46.4%),radial-gradient(circle at 50% -42%,rgba(255,255,255,.14) 0 68%,transparent 68.4%),var(--ac)}
+.brand h1{color:var(--onac)}.brand p{color:var(--onac);opacity:.85}.brand .logo i{background-color:rgba(255,255,255,.22)}.feat span{background:rgba(255,255,255,.18);color:var(--onac)}
+.card.fc{background:var(--card);border-radius:24px;padding:22px 20px;box-shadow:var(--sh);margin-top:16px}
+.tabs2{margin-top:16px}
+.pi.t-ok,.pi.t-soon,.pi.t-over,.tile.t-ok,.tile.t-soon,.tile.t-over{width:44px;height:44px;border-radius:50%}
+.btn.g{background:var(--card);color:var(--tx);box-shadow:var(--sh)}.card .btn.g{background:var(--bg);box-shadow:none}
+.top .btn.g .ic{color:var(--ac)}
+.feat{flex-wrap:nowrap;gap:6px}.feat span{flex:1 1 0;min-width:0;justify-content:center;gap:4px;padding:8px 4px;font-size:10.5px;white-space:nowrap}.feat .ic{width:13px;height:13px;flex:none}
+@media (max-width:380px){.feat{gap:5px}.feat span{font-size:9.5px;gap:3px;padding:8px 2px}.feat .ic{width:12px;height:12px}}
+@media (max-width:380px){.feat span{flex-direction:column;white-space:normal;text-align:center;line-height:1.25;gap:5px;padding:10px 4px;font-size:10px}.feat .ic{width:16px;height:16px}}
+@media (max-width:380px){.feat span{border-radius:16px}}
+.chips{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.chip,.card .chip{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:11px 4px;font-size:11.5px;line-height:1.25;text-align:center;border-radius:14px}
+.chip .ic{width:18px;height:18px}
+.chip,.card .chip{justify-content:flex-start;padding-top:12px}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+var $=function(s){return document.querySelector(s)};
+var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})};
+function ls(k,v){try{if(v===undefined){var r=localStorage.getItem(k);return r?JSON.parse(r):null}localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
+var mem={};
+function store(k,v){if(v===undefined){var x=ls(k);return x||mem[k]||null}mem[k]=v;ls(k,v)}
+var hash=function(s){var h=5381;for(var i=0;i<s.length;i++)h=(h*33)^s.charCodeAt(i);return String(h>>>0)};
+var today=function(){return new Date().toISOString().slice(0,10)};
+var fmt=function(n){return Number(n||0).toLocaleString("id-ID")};
+var rp=function(n){return "Rp"+fmt(n)};
+var fd=function(d){return new Date(d).toLocaleDateString("id-ID",{day:"numeric",month:"short",year:"numeric"})};
+
+var DEF=[
+["Oli mesin",2000,3],["Oli gardan / transmisi",8000,12],["Filter udara",8000,12],["Busi",8000,12],
+["Kampas rem",10000,12],["Rantai / V-belt",12000,12],["Aki",0,24],["Ban",15000,24]];
+var CHECK=["Tekanan angin ban","Level oli mesin","Fungsi rem depan & belakang","Lampu & sein","Kondisi rantai / belt","Bensin cukup"];
+
+var user=null,D=null,tab="home",mode="login";
+function load(){D=store("rm_data_"+user);if(D&&D.bike){D.fuel=D.fuel||[];D.docs=D.docs||[];D.shops=D.shops||[];D.prices=D.prices||[];D.issues=D.issues||[]}}
+function save(){if(D&&D.bike&&D.lastOdo!==D.bike.odo){D.hist=(D.hist||[]).concat([{d:today(),k:D.bike.odo}]).slice(-60);D.lastOdo=D.bike.odo}store("rm_data_"+user,D)}
+
+function status(it){
+  var kmP=it.km?(D.bike.odo-it.lastKm)/it.km:0;
+  var dP=it.months?((Date.now()-new Date(it.lastDate))/864e5)/(it.months*30):0;
+  var p=Math.max(kmP,dP);
+  var st=p>=1?"over":p>=.85?"soon":"ok";
+  var kmL=it.km?it.lastKm+it.km-D.bike.odo:null;
+  var dL=it.months?Math.round(it.months*30-(Date.now()-new Date(it.lastDate))/864e5):null;
+  return{p:p,st:st,kmL:kmL,dL:dL};
+}
+function score(){var s=D.items.map(function(i){return{ok:100,soon:60,over:15}[status(i).st]});return Math.round(s.reduce(function(a,b){return a+b},0)/s.length)}
+var LBL={ok:"Aman",soon:"Segera",over:"Terlambat"},COL={ok:"var(--ok)",soon:"var(--wa)",over:"var(--er)"};
+
+function render(){
+  var a=$("#app");syncHash();
+  if(!user)return a.innerHTML=authView(),bindAuth();
+  if(!D||!D.bike)return a.innerHTML=setupView(),bindSetup();
+  var V={home:home,care:care,fuel:fuelView,docs:docsView,more:moreView,shops:shopsView,prices:pricesView,pred:predView,issues:issuesView,log:logView,check:checkView,stats:statsView,tips:tipsView,search:searchView,me:me},v=V[tab](),sub=["shops","prices","pred","issues","log","check","stats","tips","me"].indexOf(tab)>-1,nv=sub?"more":tab==="search"?"home":tab;if(sub)v=back()+v;
+  var T=[["home","home","Beranda"],["care","wrench","Perawatan"],["fuel","fuel","BBM"],["docs","doc","Dokumen"],["more","more","Lainnya"]];
+  a.innerHTML='<div class="wrap">'+v+'</div><nav><div>'+T.map(function(t){return'<button class="'+(nv===t[0]?"on":"")+'" data-t="'+t[0]+'">'+ic(t[1])+t[2]+'</button>'}).join("")+'</div></nav>';
+  a.querySelectorAll("nav button").forEach(function(b){b.onclick=function(){tab=b.dataset.t;render();scrollTo(0,0)}});
+  bindCare();document.querySelectorAll("[data-go]").forEach(function(b){b.onclick=function(){tab=b.dataset.go;render();scrollTo(0,0)}});document.querySelectorAll("[data-del]").forEach(function(b){b.onclick=function(){var p=b.dataset.del.split(":");if((p[0]==="items"||p[0]==="shops"||p[0]==="prices"||p[0]==="issues")&&!b.dataset.ok){b.dataset.ok=1;b.textContent="Ketuk lagi untuk menghapus";return}D[p[0]].splice(+p[1],1);save();render()}});document.querySelectorAll("[data-cond]").forEach(function(b){b.onclick=function(){D.cond=b.dataset.cond;save();render()}});document.querySelectorAll("[data-pf]").forEach(function(b){b.onclick=function(){PF=b.dataset.pf;render()}});document.querySelectorAll("[data-tg]").forEach(function(b){b.onclick=function(){var x=D.issues[+b.dataset.tg];x.done=!x.done;save();render()}});document.querySelectorAll("[data-th]").forEach(function(b){b.onclick=function(){setTheme(b.dataset.th)}});document.querySelectorAll("[data-ac]").forEach(function(b){b.onclick=function(){setAccent(b.dataset.ac)}});if(tab==="check")bindCheck();if(tab==="me")bindMe();if(tab==="search")bindSearch();
+}
+
+function authView(){
+  return '<div class="auth"><div class="brand"><div class="logo"><i>R</i>RideMate</div><h1>Smart Care<br>for Every Ride.</h1><p>Satu aplikasi untuk perawatan kesehatan kendaraan bermotor Anda.</p><div class="feat"><span>'+ic("wrench")+'Jadwal servis</span><span>'+ic("fuel")+'Catatan BBM</span><span>'+ic("doc")+'Pajak &amp; STNK</span></div></div><div class="card fc"><h2 style="text-align:center">'+(mode==="login"?"Selamat datang!":"Buat akun baru")+'</h2><p class="mu" style="text-align:center;margin:4px 0 0">Pantau perawatan motor Anda dengan mudah.</p>'+
+  '<div class="tabs2"><button data-m="login" class="'+(mode==="login"?"on":"")+'">Masuk</button><button data-m="reg" class="'+(mode==="reg"?"on":"")+'">Daftar</button></div>'+
+  (mode==="reg"?'<label>Nama</label><input id="nm" autocomplete="name">':"")+
+  '<label>Email</label><input id="em" type="email" autocomplete="email"><label>Kata sandi</label><input id="pw" type="password" autocomplete="current-password">'+
+  '<div class="err" id="er"></div><button class="btn w" id="go">'+(mode==="login"?"Masuk":"Buat akun")+'</button>'+
+  '<p class="mu" style="margin-top:18px">Akun dan data tersimpan di perangkat ini saja (mode lokal).</p></div></div>';
+}
+function bindAuth(){
+  document.querySelectorAll(".tabs2 button").forEach(function(b){b.onclick=function(){mode=b.dataset.m;render()}});
+  $("#go").onclick=function(){
+    var em=$("#em").value.trim().toLowerCase(),pw=$("#pw").value,er=$("#er"),U=store("rm_users")||{};
+    if(!/^\S+@\S+\.\S+$/.test(em))return er.textContent="Email tidak valid.";
+    if(pw.length<6)return er.textContent="Kata sandi minimal 6 karakter.";
+    if(mode==="reg"){
+      if(U[em])return er.textContent="Email sudah terdaftar.";
+      U[em]={name:($("#nm").value.trim()||em.split("@")[0]),pw:hash(pw)};store("rm_users",U);
+    }else if(!U[em]||U[em].pw!==hash(pw))return er.textContent="Email atau kata sandi salah.";
+    user=em;store("rm_session",em);load();tab="home";render();
+  };
+}
+function setupView(){
+  return '<div class="auth"><div class="logo" style="margin:8px 0 18px"><i>R</i>RideMate</div><div class="card fc"><h2>Data motor Anda</h2><p class="mu">Satu langkah lagi untuk mulai memantau.</p>'+
+  '<label>Nama / tipe motor</label><input id="bn" placeholder="mis. Honda Vario 160">'+
+  '<label>Plat nomor</label><input id="bp" placeholder="mis. B 1234 XYZ">'+
+  '<label>Odometer saat ini (km)</label><input id="bo" type="number" inputmode="numeric" min="0">'+
+  '<div class="err" id="er"></div><button class="btn w" id="go">Mulai</button><button class="btn g w" id="out" style="margin-top:8px">Keluar</button></div></div>';
+}
+function bindSetup(){
+  $("#out").onclick=logout;
+  $("#go").onclick=function(){
+    var n=$("#bn").value.trim(),o=parseInt($("#bo").value);
+    if(!n||isNaN(o)||o<0)return $("#er").textContent="Isi nama motor dan odometer dengan benar.";
+    D={bike:{name:n,plate:$("#bp").value.trim().toUpperCase(),odo:o},items:DEF.map(function(d,i){return{id:i,name:d[0],km:d[1],months:d[2],lastKm:o,lastDate:today()}}),logs:[],checks:{},fuel:[],docs:[],shops:[],prices:[],issues:[]};
+    save();render();
+  };
+}
+function logout(){user=null;D=null;store("rm_session","");try{location.replace("#login")}catch(e){}render()}
+
+function itemRow(it,full){
+  var s=status(it),w=Math.min(100,Math.round(s.p*100));
+  var info=[];if(s.kmL!==null)info.push(s.kmL>=0?fmt(s.kmL)+" km lagi":"lewat "+fmt(-s.kmL)+" km");
+  if(s.dL!==null)info.push(s.dL>=0?s.dL+" hari lagi":"lewat "+(-s.dL)+" hari");
+  return '<div class="item"><div class="row"><div class="tile t-'+s.st+'">'+ic("wrench")+'</div><div class="gr"><h3>'+esc(it.name)+'</h3><div class="mu">'+info.join(" · ")+'</div></div><span class="pill s-'+s.st+'">'+LBL[s.st]+'</span></div>'+
+  '<div class="bar"><i style="width:'+w+'%;background:'+COL[s.st]+'"></i></div><div class="mu">'+info.join(" · ")+'</div>'+
+  (full?'<div class="mu">Interval: '+(it.km?fmt(it.km)+" km":"")+(it.km&&it.months?" / ":"")+(it.months?it.months+" bulan":"")+' · Terakhir: '+fd(it.lastDate)+' ('+fmt(it.lastKm)+' km)</div>':"")+'</div>';
+}
+function home(){
+  var sc=score(),c=sc>=75?"var(--ok)":sc>=45?"var(--wa)":"var(--er)";
+  var urgent=D.items.map(function(i){return{i:i,s:status(i)}}).filter(function(x){return x.s.st!=="ok"}).sort(function(a,b){return b.s.p-a.s.p});
+  var month=new Date().toISOString().slice(0,7),mc=D.logs.filter(function(l){return l.date.slice(0,7)===month}).reduce(function(a,l){return a+(+l.cost||0)},0);
+  return '<div class="top"><div><div class="mu">Selamat datang,</div><h2>'+esc((store("rm_users")||{})[user].name)+' 👋</h2></div><div class="row" style="gap:8px"><button class="ibtn" data-go="search" aria-label="Cari">'+ic("search")+'</button><button class="ibtn" data-act="theme" aria-label="Ganti mode terang atau gelap">'+ic(isDark()?"sun":"moon")+'</button></div></div>'+
+  '<div class="hero"><div class="hm"><button class="avt" data-act="photo" aria-label="Foto motor">'+avt()+'</button><div><div class="hl">Motor saya</div><h2>'+esc(D.bike.name)+'</h2>'+(D.bike.plate?'<span class="plate">'+esc(D.bike.plate)+'</span>':"")+'</div></div><div class="hc"><div class="hl">Odometer</div><div class="hbig">'+fmt(D.bike.odo)+' km</div><div class="hbar"><i style="width:'+sc+'%"></i></div><div class="hcap">Skor kesehatan '+sc+' / 100 \u00b7 '+(urgent.length?urgent.length+" komponen perlu perhatian":"Semua komponen prima")+'</div></div></div>'+
+  '<div class="grid" style="margin-top:12px"><div class="stat"><span class="mu">Servis terakhir</span><b style="font-size:17px">'+(D.logs[0]?fd(D.logs[0].date):"-")+'</b></div><div class="stat"><span class="mu">Biaya bulan ini</span><b>'+rp(mc)+'</b></div></div>'+
+  quick()+'<div class="acts2"><button class="act" data-act="odo">'+ic("gauge")+'Update odometer</button><button class="act" data-act="svc">'+ic("wrench")+'Catat servis</button></div>'+
+  tipsToday()+'<div class="card sc"><h3>Perlu perhatian</h3>'+(urgent.length?urgent.map(function(x){return itemRow(x.i)}).join(""):'<p class="mu">Tidak ada. Tetap jaga kondisi motor.</p>')+'</div>';
+}
+function care(){
+  return '<div class="top">'+ph("wrench","Jadwal perawatan",D.items.length+" komponen dipantau")+'<div class="row"><button class="btn g" data-act="item">Tambah</button><button class="btn" data-act="svc">Catat servis</button></div></div><div class="stack">'+
+  D.items.map(function(i,x){return itemRow(i,1)+(i.id>=100?'<div class="dl"><button class="lnk" data-del="items:'+x+'">Hapus komponen</button></div>':"")}).join("")+'</div>';
+}
+function bindCare(){
+  document.querySelectorAll("[data-act]").forEach(function(b){b.onclick=function(){({odo:odoModal,svc:svcModal,fuel:fuelModal,doc:docModal,item:itemModal,shop:shopModal,pw:pwModal,install:installApp,price:priceModal,issue:issueModal,export:exportData,import:importModal,theme:toggleTheme,photo:photoModal})[b.dataset.act]()}});
+}
+function modal(h){var m=document.createElement("div");m.className="modal";m.innerHTML='<div class="sheet">'+h+'</div>';var rm=m.remove.bind(m);m.__rm=rm;m.remove=function(){if(m.__c)return;m.__c=1;rm();if(/-form$/.test(curHash()))history.back()};m.onclick=function(e){if(e.target===m)m.remove()};document.body.appendChild(m);if(user&&D&&D.bike&&curHash()===tab)location.hash=tab+"-form";return m}
+function odoModal(){
+  var m=modal('<h2>Update odometer</h2><label>Odometer (km)</label><input id="o" type="number" inputmode="numeric" value="'+D.bike.odo+'"><div class="err" id="er"></div><button class="btn w" id="s" style="margin-top:8px">Simpan</button>');
+  m.querySelector("#s").onclick=function(){var v=parseInt(m.querySelector("#o").value);if(isNaN(v)||v<D.bike.odo)return m.querySelector("#er").textContent="Nilai tidak boleh lebih kecil dari odometer saat ini.";D.bike.odo=v;save();m.remove();render()};
+}
+function svcModal(){
+  var m=modal('<h2>Catat servis</h2><label>Tanggal</label><input id="d" type="date" value="'+today()+'"><label>Odometer (km)</label><input id="k" type="number" inputmode="numeric" value="'+D.bike.odo+'">'+
+  '<label>Komponen yang diservis</label>'+D.items.map(function(i){return'<div class="chk"><input type="checkbox" value="'+i.id+'" id="c'+i.id+'"><label for="c'+i.id+'" style="margin:0;color:var(--tx);font-size:15px">'+esc(i.name)+'</label></div>'}).join("")+
+  '<label>Biaya (Rp)</label><input id="b" type="number" inputmode="numeric" placeholder="0"><label>Bengkel</label><select id="w"><option value="">Tidak dipilih</option>'+D.shops.map(function(s){return'<option>'+esc(s.name)+'</option>'}).join("")+'</select><label>Catatan</label><textarea id="n" rows="2"></textarea><div class="err" id="er"></div><button class="btn w" id="s" style="margin-top:8px">Simpan</button>');
+  m.querySelector("#s").onclick=function(){
+    var ids=[].slice.call(m.querySelectorAll("input[type=checkbox]:checked")).map(function(c){return+c.value}),k=parseInt(m.querySelector("#k").value),d=m.querySelector("#d").value;
+    if(!ids.length)return m.querySelector("#er").textContent="Pilih minimal satu komponen.";
+    if(isNaN(k)||!d)return m.querySelector("#er").textContent="Lengkapi tanggal dan odometer.";
+    D.items.forEach(function(i){if(ids.indexOf(i.id)>-1){i.lastKm=k;i.lastDate=d}});
+    D.bike.odo=Math.max(D.bike.odo,k);
+    D.logs.unshift({date:d,km:k,cost:+m.querySelector("#b").value||0,items:D.items.filter(function(i){return ids.indexOf(i.id)>-1}).map(function(i){return i.name}),note:m.querySelector("#n").value.trim(),shop:m.querySelector("#w").value});
+    D.logs.sort(function(a,b){return b.date.localeCompare(a.date)});save();m.remove();render();
+  };
+}
+function logView(){
+  var tot=D.logs.reduce(function(a,l){return a+l.cost},0);
+  return '<div class="top">'+ph("list","Riwayat servis","Jejak perawatan motor Anda")+'</div><div class="grid"><div class="stat"><span class="mu">Total servis</span><b>'+D.logs.length+'×</b></div><div class="stat"><span class="mu">Total biaya</span><b>'+rp(tot)+'</b></div></div>'+
+  '<div class="card tl">'+(D.logs.length?D.logs.map(function(l){return'<div class="item"><div class="row"><h3>'+fd(l.date)+'</h3><span class="mu">'+fmt(l.km)+' km</span></div><div>'+l.items.map(esc).join(", ")+'</div>'+(l.shop?'<div class="mu">Bengkel: '+esc(l.shop)+'</div>':"")+(l.note?'<div class="mu">'+esc(l.note)+'</div>':"")+'<div class="mu">'+rp(l.cost)+'</div></div>'}).join(""):'<p class="mu">Belum ada riwayat. Catat servis pertama Anda dari menu Beranda.</p>')+'</div>';
+}
+function checkView(){
+  var c=(D.checks||{})[today()]||[];
+  return '<div class="top">'+ph("check","Cek harian","Periksa singkat sebelum berkendara")+'</div><div class="card"><div class="bar" style="height:8px;margin:0 0 6px"><i id="cp" style="width:0;background:var(--ac)"></i></div>'+
+  CHECK.map(function(t,i){return'<div class="chk"><input type="checkbox" data-i="'+i+'" id="q'+i+'"'+(c.indexOf(i)>-1?" checked":"")+'><label for="q'+i+'" style="margin:0;color:var(--tx);font-size:15px">'+t+'</label></div>'}).join("")+'</div><div id="cm" class="mu" style="margin-top:12px"></div>';
+}
+function bindCheck(){
+  var f=function(){var n=document.querySelectorAll("#app .chk input:checked").length;$("#cp").style.width=Math.round(n/CHECK.length*100)+"%";$("#cm").textContent=n===CHECK.length?"Semua aman. Selamat berkendara!":n+" dari "+CHECK.length+" sudah diperiksa."};
+  document.querySelectorAll("#app .chk input").forEach(function(c){c.onchange=function(){
+    D.checks=D.checks||{};var t=today();D.checks[t]=[].slice.call(document.querySelectorAll("#app .chk input:checked")).map(function(x){return+x.dataset.i});save();f()}});f();
+}
+function me(){
+  return '<div class="top">'+ph("user","Profil","Data motor dan interval")+'</div><div class="card prof"><div class="av">'+esc((store("rm_users")||{})[user].name.charAt(0).toUpperCase())+'</div><div><h3>'+esc((store("rm_users")||{})[user].name)+'</h3><div class="mu">'+esc(user)+'</div></div></div><div class="card"><div class="row" style="margin-bottom:14px"><span>Foto motor</span><button class="btn g" data-act="photo">Ubah foto</button></div><label style="margin-top:0">Nama / tipe motor</label><input id="bn" value="'+esc(D.bike.name)+'"><label>Plat nomor</label><input id="bp" value="'+esc(D.bike.plate)+'">'+
+  '<button class="btn w" id="sv" style="margin-top:16px">Simpan</button></div>'+
+  '<div class="card"><h3>Interval perawatan</h3><p class="mu">Sesuaikan dengan buku manual motor Anda.</p>'+D.items.map(function(i,x){return'<div class="row" style="margin-top:8px"><span style="flex:1">'+esc(i.name)+'</span><input style="width:90px" type="number" data-k="'+x+'" value="'+i.km+'" aria-label="km"><input style="width:70px" type="number" data-m="'+x+'" value="'+i.months+'" aria-label="bulan"></div>'}).join("")+'<p class="mu">Kolom: km · bulan (0 = tidak dipakai)</p></div>'+
+  themeCard()+'<div class="card"><h3>Cadangan data</h3><p class="mu">Simpan semua data RideMate ke file, atau pulihkan dari file cadangan.</p><div class="row" style="gap:12px"><button class="btn g w" data-act="export" style="flex:1">Simpan</button><button class="btn g w" data-act="import" style="flex:1">Pulihkan</button></div></div><div class="card"><h3>Keamanan</h3><p class="mu">Ganti kata sandi akun Anda.</p><button class="btn g w" data-act="pw">Ubah kata sandi</button></div><div class="card"><div class="mu">Masuk sebagai '+esc(user)+'</div><button class="btn g w" id="out" style="margin-top:10px">Keluar</button></div>';
+}
+function bindMe(){
+  $("#out").onclick=logout;
+  $("#sv").onclick=function(){
+    D.bike.name=$("#bn").value.trim()||D.bike.name;D.bike.plate=$("#bp").value.trim().toUpperCase();
+    document.querySelectorAll("[data-k]").forEach(function(e){D.items[+e.dataset.k].km=Math.max(0,+e.value||0)});
+    document.querySelectorAll("[data-m]").forEach(function(e){D.items[+e.dataset.m].months=Math.max(0,+e.value||0)});
+    save();$("#sv").textContent="Tersimpan ✓";setTimeout(render,700);
+  };
+}
+var P={home:'<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/>',wrench:'<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/>',fuel:'<path d="M4 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16"/><path d="M3 21h12M7 8h4"/><path d="M14 9h2a2 2 0 0 1 2 2v5a1.5 1.5 0 0 0 3 0V8l-3-3"/>',doc:'<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 13h6M9 17h6"/>',more:'<circle cx="5" cy="12" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="19" cy="12" r="1.2"/>',check:'<circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/>',list:'<path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/>',chart:'<path d="M4 20V10M10 20V4M16 20v-8M2 20h20"/>',bulb:'<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.5c.8.8 1 1.5 1 2.5h6c0-1 .2-1.7 1-2.5A6 6 0 0 0 12 3z"/>',user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/>',back:'<path d="M15 6l-6 6 6 6"/>',chev:'<path d="M9 6l6 6-6 6"/>',trash:'<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>',pin:'<path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/>',wa:'<path d="M3 21l1.6-4.6A8.5 8.5 0 1 1 8 19.5z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.5-2-1-.8.8c-.8-.4-1.6-1.2-2-2l.8-.8-1-2z"/>',sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M5 19l1.5-1.5M17.5 6.5L19 5"/>',rain:'<path d="M7 15a4 4 0 0 1 .5-8 5.5 5.5 0 0 1 10.5 1.5A3.5 3.5 0 0 1 17 15z"/><path d="M8 18l-1 3M12 18l-1 3M16 18l-1 3"/>',dust:'<path d="M3 8h11a3 3 0 1 0-3-3M3 12h15a3 3 0 1 1-3 3M3 16h8"/>',gauge:'<path d="M4 18a8 8 0 1 1 16 0"/><path d="M12 18l4-6"/>',alert:'<path d="M12 3l10 18H2z"/><path d="M12 10v4M12 17h.01"/>',drop:'<path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/>',tag:'<path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.2"/>',scan:'<path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3M4 12h16"/>',cal:'<rect x="4" y="5" width="16" height="16" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/>',moon:'<path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/>',auto:'<circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/>',search:'<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>',bike:'<circle cx="5.5" cy="17.5" r="3"/><circle cx="18.5" cy="17.5" r="3"/><path d="M18.5 17.5L16.8 10.8M16.8 10.2L15.2 9.4M5.5 17.5l3.5-2"/><path fill="currentColor" stroke="none" d="M6 14Q7 12 9.5 12L12 12Q13 10.5 15 10.3L16.5 10.5L16 13.5L14.5 14L14.5 16L10.5 16L10.5 14.5L9 14Q7.5 14.5 6 14Z"/>',camera:'<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>'};
+function ic(n){return'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+P[n]+'</svg>'}
+function back(){return'<button class="btn g" data-go="more" aria-label="Kembali" style="padding:6px 10px;margin-bottom:6px">'+ic("back")+'</button>'}
+function dl(d){return Math.round((new Date(d)-new Date(today()))/864e5)}
+function dst(d){return d<0?"over":d<=30?"soon":"ok"}
+function dtx(d){return d<0?"Lewat "+(-d)+" hari":d+" hari lagi"}
+function fs(){var f=D.fuel.slice().sort(function(a,b){return a.km-b.km}),d=0,l=0,c=0;for(var i=1;i<f.length;i++){var x=f[i].km-f[i-1].km;if(x>0){d+=x;l+=f[i].l;c+=f[i].cost}}return{kmpl:l?d/l:0,pk:d?c/d:0}}
+function quick(){var s=fs(),dd=D.docs.map(function(x){return{x:x,d:dl(x.date)}}).sort(function(a,b){return a.d-b.d})[0];return'<div class="grid" style="margin-top:12px"><div class="stat"><span class="mu">Konsumsi BBM</span><b>'+(s.kmpl?s.kmpl.toFixed(1)+" km/l":"-")+'</b></div><div class="stat"><span class="mu">Dokumen terdekat</span><b style="font-size:15px">'+(dd?esc(dd.x.name)+'</b><span class="pill s-'+dst(dd.d)+'">'+dtx(dd.d)+'</span>':"-</b>")+'</div></div>'}
+function fuelView(){var s=fs(),f=D.fuel.map(function(x,i){return{x:x,i:i}}).sort(function(a,b){return b.x.km-a.x.km});return'<div class="top">'+ph("fuel","Catatan BBM","Konsumsi dan biaya bahan bakar")+'<button class="btn" data-act="fuel">Isi BBM</button></div><div class="grid"><div class="stat"><span class="mu">Rata-rata</span><b>'+(s.kmpl?s.kmpl.toFixed(1)+" km/l":"-")+'</b></div><div class="stat"><span class="mu">Biaya per km</span><b>'+(s.pk?rp(Math.round(s.pk)):"-")+'</b></div></div><div class="card">'+(f.length?f.map(function(o){var x=o.x;return'<div class="item row"><i class="pi">'+ic("fuel")+'</i><div class="gr"><h3>'+fd(x.date)+' · '+x.l+' L</h3><div class="mu">'+fmt(x.km)+' km · '+rp(x.cost)+'</div></div><button class="btn g" data-del="fuel:'+o.i+'" aria-label="Hapus">'+ic("trash")+'</button></div>'}).join(""):'<p class="mu">Belum ada catatan. Isi tangki penuh lalu catat untuk menghitung konsumsi.</p>')+'</div>'}
+function fuelModal(){var m=modal('<h2>Isi BBM</h2><label>Tanggal</label><input id="d" type="date" value="'+today()+'"><label>Odometer (km)</label><input id="k" type="number" inputmode="numeric" value="'+D.bike.odo+'"><label>Jumlah (liter)</label><input id="l" type="number" step="0.01" inputmode="decimal"><label>Total bayar (Rp)</label><input id="b" type="number" inputmode="numeric"><p class="mu">Isi sampai penuh agar hitungan akurat.</p><div class="err" id="er"></div><button class="btn w" id="s">Simpan</button>');m.querySelector("#s").onclick=function(){var q=function(i){return m.querySelector(i).value},k=parseInt(q("#k")),l=parseFloat(q("#l")),b=parseInt(q("#b"))||0;if(isNaN(k)||!(l>0)||!q("#d"))return m.querySelector("#er").textContent="Lengkapi tanggal, odometer, dan liter.";D.fuel.push({date:q("#d"),km:k,l:l,cost:b});D.bike.odo=Math.max(D.bike.odo,k);save();m.remove();render()}}
+function docsView(){var a=D.docs.map(function(x,i){return{x:x,i:i,d:dl(x.date)}}).sort(function(p,q){return p.d-q.d});return'<div class="top">'+ph("doc","Dokumen &amp; pajak","Jangan sampai terlewat")+'<button class="btn" data-act="doc">Tambah</button></div><div class="card" style="margin-top:4px">'+(a.length?a.map(function(o){return'<div class="item row"><i class="pi t-'+dst(o.d)+'">'+ic("doc")+'</i><div class="gr"><h3>'+esc(o.x.name)+'</h3><div class="mu">Jatuh tempo '+fd(o.x.date)+'</div><span class="pill s-'+dst(o.d)+'">'+dtx(o.d)+'</span><div class="acts"><a class="ab" href="'+esc(gcal(o.x.name+" - "+D.bike.name,o.x.date,"Jatuh tempo dokumen (RideMate)"))+'" target="_blank" rel="noopener noreferrer">'+ic("cal")+'Tambah ke kalender</a></div></div><button class="btn g" data-del="docs:'+o.i+'" aria-label="Hapus">'+ic("trash")+'</button></div>'}).join(""):'<p class="mu">Catat jatuh tempo pajak tahunan, ganti plat, SIM, atau asuransi agar tidak terlewat.</p>')+'</div>'}
+function docModal(){var m=modal('<h2>Tambah dokumen</h2><label>Jenis</label><select id="t"><option>Pajak tahunan</option><option>Ganti plat (5 tahunan)</option><option>SIM C</option><option>Asuransi</option><option>Lainnya</option></select><label>Nama (opsional)</label><input id="n"><label>Jatuh tempo</label><input id="d" type="date"><div class="err" id="er"></div><button class="btn w" id="s" style="margin-top:8px">Simpan</button>');m.querySelector("#s").onclick=function(){var d=m.querySelector("#d").value;if(!d)return m.querySelector("#er").textContent="Isi tanggal jatuh tempo.";var n=m.querySelector("#n").value.trim(),t=m.querySelector("#t").value;D.docs.push({name:n?t+" · "+n:t,date:d});save();m.remove();render()}}
+function itemModal(){var m=modal('<h2>Tambah komponen</h2><label>Nama komponen</label><input id="n" placeholder="mis. Minyak rem"><label>Interval jarak (km, 0 = tidak dipakai)</label><input id="k" type="number" inputmode="numeric" value="0"><label>Interval waktu (bulan, 0 = tidak dipakai)</label><input id="o" type="number" inputmode="numeric" value="12"><div class="err" id="er"></div><button class="btn w" id="s" style="margin-top:8px">Simpan</button>');m.querySelector("#s").onclick=function(){var n=m.querySelector("#n").value.trim(),k=+m.querySelector("#k").value||0,o=+m.querySelector("#o").value||0;if(!n||(!k&&!o))return m.querySelector("#er").textContent="Isi nama dan minimal satu interval.";D.items.push({id:Date.now(),name:n,km:k,months:o,lastKm:D.bike.odo,lastDate:today()});save();m.remove();render()}}
+function moreView(){var L=[["shops","pin","Bengkel","Bengkel langganan, Maps &amp; WhatsApp"],["prices","tag","Harga sparepart & oli","Catat harga pembelian Anda"],["pred","cal","Prediksi servis","Perkiraan jadwal sesuai pemakaian"],["issues","alert","Catatan keluhan","Gejala dan masalah motor"],["check","check","Cek harian","Periksa sebelum berkendara"],["log","list","Riwayat servis","Semua catatan servis"],["stats","chart","Statistik biaya","Pengeluaran 6 bulan terakhir"],["tips","bulb","Tips & gejala","Panduan masalah umum"],["me","user","Profil & pengaturan","Data motor dan interval"]];return'<div class="top">'+ph("more","Lainnya","Fitur dan pengaturan")+'<button class="ibtn" data-go="search" aria-label="Cari">'+ic("search")+'</button></div>'+installCard()+'<div class="card" style="padding:4px 16px">'+L.map(function(l){return'<button class="mi" data-go="'+l[0]+'">'+ic(l[1])+'<span><b>'+esc(l[2])+'</b><br><span class="mu">'+l[3]+'</span></span>'+ic("chev")+'</button>'}).join("")+'</div>'}
+function statsView(){var ms=[],n=new Date(),B=["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"];for(var i=5;i>=0;i--){var d=new Date(n.getFullYear(),n.getMonth()-i,1);ms.push(d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0"))}var sum=function(A,m){return A.filter(function(l){return l.date.slice(0,7)===m}).reduce(function(a,l){return a+l.cost},0)},sv=ms.map(function(m){return sum(D.logs,m)}),fu=ms.map(function(m){return sum(D.fuel,m)}),mx=Math.max.apply(null,sv.map(function(v,i){return v+fu[i]}).concat([1])),t=function(A){return A.reduce(function(a,b){return a+b},0)};return'<div class="top">'+ph("chart","Statistik biaya","Pengeluaran 6 bulan terakhir")+'</div><div class="card"><div class="cols">'+ms.map(function(m,i){return'<div class="col"><div class="stk"><i style="height:'+fu[i]/mx*100+'%;background:var(--mu);opacity:.5"></i><i style="height:'+sv[i]/mx*100+'%;background:var(--ac)"></i></div><span class="mu">'+B[+m.slice(5)-1]+'</span></div>'}).join("")+'</div></div><div class="grid" style="margin-top:12px"><div class="stat"><span class="mu">Servis (6 bln)</span><b>'+rp(t(sv))+'</b></div><div class="stat"><span class="mu">BBM (6 bln)</span><b>'+rp(t(fu))+'</b></div></div><p class="mu">Biru: servis · Abu-abu: BBM</p>'}
+var TIPS=[["Mesin sulit hidup","Periksa aki dan bensin, lalu cek busi. Starter lemah biasanya tanda aki tekor."],["Rem berdecit atau terasa kurang pakem","Kampas mungkin tipis atau minyak rem perlu diganti. Segera periksa."],["Boros bensin","Cek filter udara, tekanan ban, busi, dan kondisi oli."],["Getaran berlebih","Periksa baut, kondisi ban, serta rantai atau V-belt."],["Tarikan berat","Kemungkinan filter udara kotor, busi aus, atau V-belt dan roller perlu dicek."],["Lampu redup","Periksa aki dan regulator (kiprok) di bengkel."]];
+function tipsView(){return'<div class="top">'+ph("bulb","Tips &amp; gejala","Panduan masalah umum")+'</div><div class="card" style="padding:4px 16px">'+TIPS.map(function(t){return'<details class="item"><summary><b>'+t[0]+'</b></summary><p class="mu" style="margin:8px 0 0">'+t[1]+'</p></details>'}).join("")+'</div><p class="mu">Panduan umum. Untuk kepastian, periksakan ke bengkel.</p>'}
+var CT={panas:["Parkir di tempat teduh agar jok, aki, dan cat tidak cepat rusak.","Cek oli dan cairan pendingin (jika ada) lebih sering. Mesin bekerja lebih panas.","Tekanan ban naik saat panas. Ukur saat ban dingin, jangan dikurangi saat panas."],hujan:["Setelah hujan, tes rem pelan-pelan agar piringan dan kampas kering lebih cepat.","Bersihkan dan lumasi rantai setelah kehujanan atau melewati lumpur.","Cek lampu, sein, dan konektor kelistrikan. Hindari menerobos genangan tinggi."],debu:["Bersihkan filter udara lebih sering dan ganti jika sudah kotor.","Bersihkan dan lumasi rantai agar debu tidak mempercepat keausan.","Bilas motor dengan air mengalir sebelum dilap agar cat tidak tergores debu."]},CI={panas:["sun","Cerah / panas"],hujan:["rain","Hujan"],debu:["dust","Berdebu"]};
+function odoTip(o){return o<1000?["Masa adaptasi","Hindari gas penuh dan beban berat. Umumnya oli pertama diganti sekitar 1.000 km."]:o<5000?["Fase rutin","Disiplin ganti oli sesuai jadwal dan cek tekanan ban seminggu sekali."]:o<10000?["Cek komponen awal","Periksa filter udara, busi, dan ketebalan kampas rem."]:o<20000?["Perhatikan penggerak","Cek rantai atau V-belt, minyak rem, dan kondisi aki."]:o<40000?["Servis menengah","Periksa bearing, suspensi, setelan klep, dan kondisi ban."]:["Motor berusia matang","Lakukan pemeriksaan menyeluruh: seal, karet, kelistrikan, serta rantai dan gir."]}
+function tp(i,h,t,c){return'<div class="tp"><i class="pi '+(c||"")+'">'+ic(i)+'</i><div><h4>'+esc(h)+'</h4><p>'+esc(t)+'</p></div></div>'}
+function tipsToday(){var c=D.cond||"panas",ct=CT[c][Math.floor(Date.now()/864e5)%CT[c].length],ot=odoTip(D.bike.odo),u=D.items.map(function(i){return{i:i,s:status(i)}}).sort(function(a,b){return b.s.p-a.s.p})[0],ut=u.s.st==="over"?u.i.name+" sudah melewati jadwal. Segera servis agar tidak merusak komponen lain.":u.s.st==="soon"?u.i.name+" hampir jatuh tempo. Siapkan jadwal servis dalam waktu dekat.":"Semua komponen masih sesuai jadwal. Biasakan cek harian sebelum berangkat.";return'<div class="card"><div class="ph"><i class="pi">'+ic("bulb")+'</i><div><h3>Tips hari ini</h3><div class="mu">'+new Date().toLocaleDateString("id-ID",{weekday:"long",day:"numeric",month:"long"})+'</div></div></div><div class="chips">'+Object.keys(CI).map(function(k){return'<button class="chip'+(k===c?" on":"")+'" data-cond="'+k+'">'+ic(CI[k][0])+CI[k][1]+'</button>'}).join("")+'</div>'+tp(CI[c][0],"Kondisi: "+CI[c][1],ct)+tp("gauge","Odometer "+fmt(D.bike.odo)+" km · "+ot[0],ot[1])+tp(u.s.st==="ok"?"check":"alert","Prioritas",ut,"t-"+u.s.st)+'<p class="mu" style="margin:10px 0 0">Pilih kondisi cuaca hari ini. Tips bersifat umum, ikuti juga buku manual motor Anda.</p></div>'}
+function wa(n){var d=String(n||"").replace(/\D/g,"");if(!d)return"";if(d[0]==="0")d="62"+d.slice(1);else if(d[0]==="8")d="62"+d;return d}
+function shopsView(){return'<div class="top">'+ph("pin","Bengkel","Tempat servis langganan Anda")+'<button class="btn" data-act="shop">Tambah</button></div><div class="stack">'+(D.shops.length?D.shops.map(function(s,i){var mp=s.map&&/^https?:\/\//i.test(s.map)?s.map:"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(s.name+" "+(s.loc||"")),w=wa(s.wa);return'<div class="item"><div class="row"><i class="pi">'+ic("wrench")+'</i><div class="gr"><h3>'+esc(s.name)+'</h3><div class="mu">'+esc(s.loc||"Lokasi belum diisi")+'</div></div></div>'+(s.note?'<div class="mu" style="margin:8px 0 0">'+esc(s.note)+'</div>':"")+'<div class="acts"><a class="ab" href="'+esc(mp)+'" target="_blank" rel="noopener noreferrer">'+ic("pin")+'Buka Maps</a>'+(w?'<a class="ab" href="https://wa.me/'+w+'" target="_blank" rel="noopener noreferrer">'+ic("wa")+'WhatsApp</a>':"")+'<button class="lnk" data-del="shops:'+i+'">Hapus</button></div></div>'}).join(""):'<div class="card"><p class="mu" style="margin:0">Belum ada bengkel. Tambahkan nama, lokasi, tautan Maps, dan nomor WhatsApp.</p></div>')+'</div>'}
+function shopModal(){var m=modal('<h2>Tambah bengkel</h2><label>Nama bengkel</label><input id="n" placeholder="mis. Bengkel Jaya Motor"><label>Lokasi / alamat</label><input id="l" placeholder="mis. Jl. Merdeka No. 10, Mojokerto"><label>Tautan Google Maps (opsional)</label><input id="p" type="url" placeholder="https://maps.app.goo.gl/..."><label>Nomor WhatsApp (opsional)</label><input id="w" type="tel" inputmode="tel" placeholder="08123456789"><label>Catatan (opsional)</label><input id="c" placeholder="mis. Buka Senin-Sabtu, 08.00-17.00"><div class="err" id="er"></div><button class="btn w" id="s" style="margin-top:8px">Simpan</button>');m.querySelector("#s").onclick=function(){var q=function(i){return m.querySelector(i).value.trim()},n=q("#n"),p=q("#p"),w=q("#w"),e=m.querySelector("#er");if(!n)return e.textContent="Isi nama bengkel.";if(p&&!/^https?:\/\//i.test(p))return e.textContent="Tautan Maps harus diawali http:// atau https://";if(w&&(wa(w).length<9||wa(w).length>15))return e.textContent="Nomor WhatsApp tidak valid.";D.shops.push({name:n,loc:q("#l"),map:p,wa:w,note:q("#c")});save();m.remove();render()}}
+function pace(){var pts=(D.hist||[]).map(function(h){return{d:h.d,k:h.k}}).concat(D.logs.map(function(l){return{d:l.date,k:l.km}}),D.fuel.map(function(f){return{d:f.date,k:f.km}})).filter(function(p){return p.d&&p.k>=0}).sort(function(a,b){return a.d.localeCompare(b.d)||a.k-b.k});if(pts.length<2)return 0;var last=pts[pts.length-1],cut=new Date(Date.now()-90*864e5).toISOString().slice(0,10),w=pts.filter(function(p){return p.d>=cut});if(w.length<2)w=pts;var a=w[0],days=(new Date(last.d)-new Date(a.d))/864e5,km=last.k-a.k;return days>=7&&km>0?km/days:0}
+function pcost(name){var n=name.toLowerCase(),b=null;D.prices.forEach(function(p){var q=p.name.toLowerCase();if((q.indexOf(n)>-1||n.indexOf(q)>-1)&&(!b||p.date>=b.date))b=p});return b?b.price*(b.qty||1):0}
+function predView(){var v=pace(),R=D.items.map(function(it){var s=status(it),d=null;if(it.km&&s.kmL!==null)d=s.kmL<=0?0:v?s.kmL/v:null;if(it.months&&s.dL!==null){var t=Math.max(0,s.dL);d=d===null?t:Math.min(d,t)}return{it:it,s:s,d:d===null?null:Math.round(d),c:pcost(it.name)}}).sort(function(a,b){return(a.d===null)-(b.d===null)||a.d-b.d}),need=R.filter(function(o){return o.d!==null&&o.d<=30}).reduce(function(a,o){return a+o.c},0);return'<div class="top">'+ph("cal","Prediksi servis","Perkiraan jatuh tempo sesuai pemakaian")+'</div><div class="grid"><div class="stat"><span class="mu">Jarak harian</span><b style="font-size:18px">'+(v?(Math.round(v*10)/10)+" km/hari":"-")+'</b></div><div class="stat"><span class="mu">Biaya 30 hari</span><b style="font-size:18px">'+(need?rp(need):"-")+'</b></div></div>'+(v?'':'<p class="mu">Catat odometer atau BBM minimal dua kali dengan jarak waktu 7 hari atau lebih agar prediksi berdasarkan jarak bisa dihitung. Untuk sementara, prediksi memakai interval waktu saja.</p>')+'<div class="stack">'+R.map(function(o){var txt=o.d===null?"Belum bisa diperkirakan":o.s.st==="over"?"Sudah lewat jadwal, segera servis":o.d===0?"Jatuh tempo sekarang":"± "+fd(new Date(Date.now()+o.d*864e5))+" ("+o.d+" hari lagi)";return'<div class="item"><div class="row"><div class="tile t-'+o.s.st+'">'+ic("wrench")+'</div><div class="gr"><h3>'+esc(o.it.name)+'</h3><div class="mu">'+txt+'</div>'+(o.c?'<div class="mu">Harga terakhir '+rp(o.c)+'</div>':"")+'</div><span class="pill s-'+o.s.st+'">'+LBL[o.s.st]+'</span></div>'+(o.d!==null?'<div class="acts"><a class="ab" href="'+esc(gcal("Servis "+o.it.name+" - "+D.bike.name,ld(new Date(Date.now()+o.d*864e5)),"Perkiraan jatuh tempo "+o.it.name+" (RideMate)"))+'" target="_blank" rel="noopener noreferrer">'+ic("cal")+'Tambah ke kalender</a></div>':"")+'</div>'}).join("")+'</div><p class="mu">Perkiraan memakai rata-rata pemakaian Anda dan harga dari menu Harga sparepart &amp; oli bila ada.</p>'}
+var AREA=["Mesin","Rem","Kelistrikan","Ban & roda","CVT / rantai","Suspensi","Lainnya"],SEV=["Ringan","Sedang","Berat"];
+function issuesView(){var L=D.issues.map(function(x,i){return{x:x,i:i}}).sort(function(a,b){return(+!!a.x.done)-(+!!b.x.done)||b.x.date.localeCompare(a.x.date)||b.i-a.i}),open=D.issues.filter(function(x){return!x.done}).length;return'<div class="top">'+ph("alert","Catatan keluhan","Pantau gejala sebelum jadi kerusakan")+'<button class="btn" data-act="issue">Tambah</button></div><div class="grid"><div class="stat"><span class="mu">Belum selesai</span><b>'+open+'</b></div><div class="stat"><span class="mu">Total tercatat</span><b>'+D.issues.length+'</b></div></div><div class="stack">'+(L.length?L.map(function(o){var x=o.x,c=x.done?"ok":x.sev==="Berat"?"over":x.sev==="Sedang"?"soon":"ok";return'<div class="item"><div class="row"><div class="tile t-'+c+'">'+ic(x.done?"check":"alert")+'</div><div class="gr"><h3>'+esc(x.area)+' · '+esc(x.sev)+'</h3><div class="mu">'+fd(x.date)+(x.km?" · "+fmt(x.km)+" km":"")+'</div></div><span class="pill s-'+c+'">'+(x.done?"Selesai":"Terbuka")+'</span></div><p style="margin:10px 0 0">'+esc(x.text)+'</p><div class="acts"><button class="btn g" data-tg="'+o.i+'">'+(x.done?"Buka lagi":"Tandai selesai")+'</button><button class="lnk" data-del="issues:'+o.i+'">Hapus</button></div></div>'}).join(""):'<div class="card"><p class="mu" style="margin:0">Belum ada keluhan. Catat bunyi aneh, getaran, atau gejala lain agar bisa dilaporkan lengkap ke bengkel.</p></div>')+'</div>'}
+function issueModal(){var o=function(A){return A.map(function(a){return'<option>'+esc(a)+'</option>'}).join("")},m=modal('<h2>Catat keluhan</h2><label>Bagian</label><select id="a">'+o(AREA)+'</select><label>Tingkat</label><select id="v">'+o(SEV)+'</select><label>Gejala</label><textarea id="t" rows="3" placeholder="mis. Bunyi berdecit saat mengerem di roda depan"></textarea><label>Tanggal</label><input id="d" type="date" value="'+today()+'"><div class="err" id="er"></div><button class="btn w" id="s" style="margin-top:8px">Simpan</button>');m.querySelector("#s").onclick=function(){var q=function(i){return m.querySelector(i).value.trim()};if(!q("#t")||!q("#d"))return m.querySelector("#er").textContent="Isi gejala dan tanggal.";D.issues.push({area:q("#a"),sev:q("#v"),text:q("#t"),date:q("#d"),km:D.bike.odo,done:false});save();m.remove();render()}}
+function ld(d){var p=function(n){return String(n).padStart(2,"0")};return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate())}
+function gcal(t,date,det){var f=function(d){return d.toISOString().slice(0,10).replace(/-/g,"")},a=new Date(date+"T00:00:00Z"),b=new Date(a.getTime()+864e5);return"https://calendar.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent(t)+"&dates="+f(a)+"/"+f(b)+"&details="+encodeURIComponent(det||"")}
+function clean(d){var N=function(v){return+v||0};d.bike.odo=N(d.bike.odo);d.bike.name=String(d.bike.name||"Motor");d.bike.plate=String(d.bike.plate||"");d.bike.photo=/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+\/=]+$/.test(d.bike.photo||"")?d.bike.photo:"";d.lastOdo=d.bike.odo;d.items.forEach(function(i){["id","km","months","lastKm"].forEach(function(k){i[k]=N(i[k])});i.name=String(i.name||"Komponen");i.lastDate=String(i.lastDate||today())});[["logs",["km","cost"]],["fuel",["km","l","cost"]],["prices",["price","qty"]],["issues",["km"]],["docs",[]],["shops",[]]].forEach(function(g){d[g[0]]=Array.isArray(d[g[0]])?d[g[0]]:[];d[g[0]].forEach(function(r){g[1].forEach(function(k){r[k]=N(r[k])});r.date=String(r.date||today());if(g[0]==="logs"&&!Array.isArray(r.items))r.items=[]})});d.checks=d.checks&&typeof d.checks==="object"?d.checks:{};d.cond=["panas","hujan","debu"].indexOf(d.cond)>-1?d.cond:"panas";d.hist=(Array.isArray(d.hist)?d.hist:[]).map(function(h){return{d:String(h.d),k:N(h.k)}});return d}
+async function exportData(){var data=JSON.stringify({app:"RideMate",v:1,at:new Date().toISOString(),data:D},null,1),fn="ridemate-cadangan-"+today()+".json",dl=null;try{dl=window.claude?await claude.use("downloads"):null}catch(e){}if(dl){try{await dl.save({filename:fn,data:data});return}catch(e){if(e&&e.code==="declined")return}}if(!window.claude){try{var bl=new Blob([data],{type:"application/json"}),u=URL.createObjectURL(bl),an=document.createElement("a");an.href=u;an.download=fn;document.body.appendChild(an);an.click();an.remove();setTimeout(function(){URL.revokeObjectURL(u)},4000);return}catch(e){}}var m=modal('<h2>Cadangan data</h2><p class="mu">Penyimpanan file tidak tersedia di tampilan ini. Salin teks di bawah dan simpan di tempat aman. Untuk memulihkan, tempel di menu Pulihkan.</p><textarea id="x" rows="8" readonly></textarea><button class="btn w" id="c" style="margin-top:10px">Salin</button><div class="err" id="er"></div>');m.querySelector("#x").value=data;m.querySelector("#c").onclick=function(){var t=m.querySelector("#x"),e=m.querySelector("#er");t.select();try{document.execCommand("copy");e.style.color="var(--ok)";e.textContent="Tersalin."}catch(x){e.textContent="Salin manual dari kotak teks."}}}
+function importModal(){var m=modal('<h2>Pulihkan data</h2><p class="mu">Pilih file cadangan RideMate (.json) atau tempel isinya. Data saat ini akan diganti.</p><input id="f" type="file" accept=".json,application/json"><label>Atau tempel teks cadangan</label><textarea id="t" rows="4"></textarea><div class="err" id="er"></div><button class="btn w" id="s" style="margin-top:8px">Pulihkan</button>'),$m=function(i){return m.querySelector(i)},P=null;$m("#s").onclick=async function(){var e=$m("#er"),b=$m("#s");e.style.color="";if(P){D=clean(P);save();m.remove();render();return}try{var f=$m("#f").files[0],txt=f?await f.text():$m("#t").value.trim(),o=JSON.parse(txt),d=o&&o.data?o.data:o;if(!d||!d.bike||!Array.isArray(d.items))throw 0;P=d;e.style.color="var(--wa)";e.textContent="Data valid: "+d.items.length+" komponen, "+(Array.isArray(d.logs)?d.logs.length:0)+" riwayat servis. Ketuk sekali lagi untuk mengganti data saat ini.";b.textContent="Ganti data sekarang"}catch(x){e.textContent="File atau teks cadangan tidak valid."}}}
+var ACC=[["Biru","#2f5bff"],["Indigo","#3949ab"],["Ungu","#8e24aa"],["Ungu tua","#5e35b1"],["Pink","#d81b60"],["Merah","#e53935"],["Jingga","#f4511e"],["Oranye","#ef6c00"],["Hijau","#2e7d32"],["Teal","#00897b"],["Cyan","#00838f"],["Cokelat","#6d4c41"],["Abu-biru","#546e7a"]];
+function isDark(){var t=store("rm_theme")||"auto";return t==="dark"||(t==="auto"&&!!window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)}
+function applyPrefs(){var d=document.documentElement,t=store("rm_theme")||"auto",c=store("rm_accent");if(!/^#[0-9a-f]{6}$/i.test(c||""))c=ACC[0][1];if(t==="auto")d.removeAttribute("data-theme");else d.setAttribute("data-theme",t);d.style.setProperty("--ac0",c);var m=document.querySelector('meta[name="theme-color"]');if(m)m.content=isDark()?"#0e1020":"#f1f1f9"}
+function setTheme(t){store("rm_theme",t);applyPrefs();render()}
+function toggleTheme(){setTheme(isDark()?"light":"dark")}
+function setAccent(c){store("rm_accent",c);applyPrefs();render()}
+function themeCard(){var t=store("rm_theme")||"auto",c=(store("rm_accent")||ACC[0][1]).toLowerCase();return'<div class="card"><h3>Tampilan</h3><p class="mu" style="margin:2px 0 12px">Mode tampilan</p><div class="seg">'+[["light","Terang","sun"],["dark","Gelap","moon"],["auto","Otomatis","auto"]].map(function(o){return'<button class="'+(t===o[0]?"on":"")+'" data-th="'+o[0]+'">'+ic(o[2])+o[1]+'</button>'}).join("")+'</div><p class="mu" style="margin:16px 0 10px">Warna aksen</p><div class="sw">'+ACC.map(function(a){return'<button class="swb'+(c===a[1]?" on":"")+'" data-ac="'+a[1]+'" style="--sw:'+a[1]+'" aria-label="'+a[0]+'" title="'+a[0]+'">'+(c===a[1]?ic("check"):"")+'</button>'}).join("")+'</div></div>'}
+try{matchMedia("(prefers-color-scheme: dark)").addEventListener("change",function(){applyPrefs();if(user)render()})}catch(e){}
+function avt(){var p=D.bike.photo;return(p?'<img src="'+esc(p)+'" alt="Foto motor">':ic("bike"))+'<span class="cam">'+ic("camera")+'</span>'}
+function photoModal(){var pend=null,m=modal('<h2>Foto motor</h2><p class="mu">Foto dipotong persegi dan dikecilkan, lalu disimpan di perangkat ini.</p><div style="display:flex;justify-content:center;margin:14px 0"><div class="avt" id="pv" style="width:120px;height:120px;border-radius:24px;background:var(--card);color:var(--mu)">'+(D.bike.photo?'<img src="'+esc(D.bike.photo)+'" alt="">':ic("bike"))+'</div></div><input id="f" type="file" accept="image/*"><div class="err" id="er"></div><button class="btn w" id="s" style="margin-top:10px" disabled>Simpan foto</button>'+(D.bike.photo?'<button class="btn g w" id="d" style="margin-top:8px">Hapus foto</button>':"")),$m=function(i){return m.querySelector(i)};
+$m("#f").onchange=function(){var f=this.files[0],e=$m("#er");if(!f)return;e.textContent="";var r=new FileReader();r.onload=function(){var i=new Image();i.onload=function(){var z=Math.min(i.width,i.height),c=document.createElement("canvas");c.width=c.height=320;c.getContext("2d").drawImage(i,(i.width-z)/2,(i.height-z)/2,z,z,0,0,320,320);pend=c.toDataURL("image/jpeg",.82);$m("#pv").innerHTML='<img src="'+pend+'" alt="">';$m("#s").disabled=false};i.onerror=function(){e.textContent="Format foto tidak didukung. Gunakan JPG atau PNG."};i.src=r.result};r.onerror=function(){e.textContent="Foto tidak bisa dibaca."};r.readAsDataURL(f)};
+$m("#s").onclick=function(){if(!pend)return;D.bike.photo=pend;try{save()}catch(x){}m.remove();render()};
+if($m("#d"))$m("#d").onclick=function(){D.bike.photo="";save();m.remove();render()}}
+var SQ="";
+function searchHtml(q){q=(q||"").trim().toLowerCase();var P=[["care","Perawatan","wrench","Jadwal perawatan komponen"],["fuel","BBM","fuel","Catatan isi bahan bakar"],["docs","Dokumen & pajak","doc","Pajak, STNK, SIM, asuransi"],["shops","Bengkel","pin","Bengkel langganan, Maps, WhatsApp"],["prices","Harga sparepart & oli","tag","Catatan harga pembelian"],["pred","Prediksi servis","cal","Perkiraan jadwal servis"],["issues","Catatan keluhan","alert","Gejala dan masalah motor"],["log","Riwayat servis","list","Semua catatan servis"],["check","Cek harian","check","Periksa sebelum berkendara"],["stats","Statistik biaya","chart","Pengeluaran 6 bulan terakhir"],["tips","Tips & gejala","bulb","Panduan masalah umum"],["me","Profil & pengaturan","user","Tema, warna aksen, kata sandi, cadangan data"]],R=[],L=function(g,t,s,go,i,h){R.push({g:g,t:String(t),s:String(s),go:go,i:i,h:String(h).toLowerCase()})};
+P.forEach(function(x){L("Halaman",x[1],x[3],x[0],x[2],x[1]+" "+x[3])});
+D.items.forEach(function(x){L("Komponen",x.name,"Terakhir "+fd(x.lastDate)+" \u00b7 "+fmt(x.lastKm)+" km","care","wrench",x.name+" "+fd(x.lastDate))});
+D.logs.forEach(function(x){L("Riwayat servis",x.items.join(", ")||"Servis",fd(x.date)+" \u00b7 "+fmt(x.km)+" km"+(x.shop?" \u00b7 "+x.shop:""),"log","list",x.items.join(" ")+" "+(x.shop||"")+" "+(x.note||"")+" "+fd(x.date)+" "+x.date+" "+x.km+" "+x.cost)});
+D.fuel.forEach(function(x){L("BBM",x.l+" L \u00b7 "+rp(x.cost),fd(x.date)+" \u00b7 "+fmt(x.km)+" km","fuel","fuel","bbm bensin "+x.l+" "+x.cost+" "+x.km+" "+fd(x.date)+" "+x.date)});
+D.docs.forEach(function(x){L("Dokumen",x.name,"Jatuh tempo "+fd(x.date),"docs","doc",x.name+" "+fd(x.date)+" "+x.date)});
+D.shops.forEach(function(x){L("Bengkel",x.name,x.loc||"Lokasi belum diisi","shops","pin",x.name+" "+(x.loc||"")+" "+(x.note||"")+" "+(x.wa||""))});
+D.prices.forEach(function(x){L("Harga",x.name,rp(x.price)+" \u00b7 "+fd(x.date)+(x.shop?" \u00b7 "+x.shop:""),"prices","tag",x.name+" "+x.cat+" "+(x.shop||"")+" "+x.price+" "+fd(x.date)+" "+x.date)});
+D.issues.forEach(function(x){L("Keluhan",x.area+" \u00b7 "+x.sev,x.text,"issues","alert",x.area+" "+x.sev+" "+x.text+" "+fd(x.date)+" "+x.date)});
+var tk=q?q.split(/\s+/):[],F=q?R.filter(function(r){return tk.every(function(t){return r.h.indexOf(t)>-1})}):R.filter(function(r){return r.g==="Halaman"});
+if(!F.length)return'<p class="mu" style="margin-top:24px">Tidak ada hasil untuk \u201c'+esc(q)+'\u201d. Coba kata kunci lain, misalnya nama komponen, bengkel, atau tanggal.</p>';
+var G={},O=[];F.forEach(function(r){var g=q?r.g:"Pintasan";if(!G[g]){G[g]=[];O.push(g)}G[g].push(r)});
+return O.map(function(g){var l=G[g];return'<div class="sh">'+esc(g)+(q?" ("+l.length+")":"")+'</div><div class="card" style="padding:4px 16px;margin-top:0">'+l.slice(0,6).map(function(r){return'<button class="mi" data-go="'+r.go+'">'+ic(r.i)+'<span><b>'+esc(r.t)+'</b><br><span class="mu">'+esc(r.s)+'</span></span>'+ic("chev")+'</button>'}).join("")+(l.length>6?'<div class="mu" style="padding:10px 0">+'+(l.length-6)+' hasil lainnya. Persempit pencarian.</div>':"")+'</div>'}).join("")}
+function searchView(){return'<div class="top"><button class="ibtn" data-go="home" aria-label="Kembali">'+ic("back")+'</button><input id="sq" type="search" value="'+esc(SQ)+'" placeholder="Cari komponen, servis, bengkel, harga" autocomplete="off" aria-label="Cari"></div><div id="sr">'+searchHtml(SQ)+'</div>'}
+function bindSearch(){var i=$("#sq"),r=$("#sr");i.addEventListener("input",function(){SQ=i.value;r.innerHTML=searchHtml(SQ)});r.onclick=function(e){var b=e.target.closest("[data-go]");if(b){tab=b.dataset.go;render();scrollTo(0,0)}};if(!SQ)i.focus()}
+var VIEWS=["search","home","care","fuel","docs","more","shops","prices","pred","issues","log","check","stats","tips","me"];
+function curHash(){return location.hash.replace(/^#/,"")}
+function syncHash(){if(!user||!D||!D.bike)return;var h=curHash();if(h===tab||h===tab+"-form")return;if(h===""||h==="login")location.replace("#"+tab);else location.hash=tab}
+window.addEventListener("hashchange",function(){var h=curHash(),f=/-form$/.test(h),t=f?h.slice(0,-5):h;if(!f)document.querySelectorAll(".modal").forEach(function(m){if(!m.__c){m.__c=1;m.__rm()}});if(!user||!D||!D.bike)return;if(VIEWS.indexOf(t)<0){location.replace("#"+tab);return}if(f&&!document.querySelector(".modal")){location.replace("#"+t);return}if(t!==tab){tab=t;render();scrollTo(0,0)}});
+var PF="all";
+function pricesView(){var A=D.prices.map(function(x,i){return{x:x,i:i}}),K=function(x){return x.name.trim().toLowerCase()},by={};A.slice().sort(function(a,b){return a.x.date.localeCompare(b.x.date)||a.i-b.i}).forEach(function(o){var k=K(o.x),l=by[k]=by[k]||[];o.prev=l.length?l[l.length-1].x.price:0;l.push(o)});var mo=new Date().toISOString().slice(0,7),sp=D.prices.filter(function(x){return x.date.slice(0,7)===mo}).reduce(function(a,x){return a+x.price*(x.qty||1)},0),L=A.filter(function(o){return PF==="all"||o.x.cat===PF}).sort(function(a,b){return b.x.date.localeCompare(a.x.date)||b.i-a.i});return'<div class="top">'+ph("tag","Harga sparepart &amp; oli","Pantau harga dari waktu ke waktu")+'</div><div class="row" style="margin-bottom:12px"><button class="btn w" data-act="price">Catat harga baru</button></div><div class="grid"><div class="stat"><span class="mu">Barang tercatat</span><b>'+D.prices.length+'</b></div><div class="stat"><span class="mu">Belanja bulan ini</span><b style="font-size:18px">'+rp(sp)+'</b></div></div><div class="chips">'+[["all","Semua"],["Oli","Oli"],["Sparepart","Sparepart"]].map(function(c){return'<button class="chip'+(PF===c[0]?" on":"")+'" data-pf="'+c[0]+'">'+c[1]+'</button>'}).join("")+'</div><div class="stack">'+(L.length?L.map(function(o){var x=o.x,l=by[K(x)],mn=Math.min.apply(null,l.map(function(q){return q.x.price})),bd="";if(l.length>1&&x.price===mn)bd='<span class="pill s-ok">Termurah</span> ';if(o.prev&&o.prev!==x.price){var pc=Math.round((x.price-o.prev)/o.prev*100);bd+='<span class="pill '+(pc>0?"s-over":"s-ok")+'">'+(pc>0?"Naik ":"Turun ")+Math.abs(pc)+'%</span>'}return'<div class="item row"><i class="pi">'+ic(x.cat==="Oli"?"drop":"wrench")+'</i><div class="gr"><h3>'+esc(x.name)+'</h3><div class="mu">'+fd(x.date)+(x.shop?" · "+esc(x.shop):"")+((x.qty||1)>1?" · "+x.qty+"×":"")+'</div>'+(bd?'<div style="margin-top:4px">'+bd+'</div>':"")+'</div><div style="text-align:right"><b>'+rp(x.price)+'</b><br><button class="lnk" data-del="prices:'+o.i+'">Hapus</button></div></div>'}).join(""):'<div class="card"><p class="mu" style="margin:0">Belum ada data. Catat harga oli atau sparepart yang Anda beli.</p></div>')+'</div>'}
+function priceModal(){var m=modal('<h2>Catat harga</h2><label>Nama barang</label><input id="n" placeholder="mis. Oli mesin 0.8L / Kampas rem depan"><label>Kategori</label><select id="c"><option>Oli</option><option>Sparepart</option></select><div class="grid"><div><label>Harga satuan (Rp)</label><input id="p" type="number" inputmode="numeric"></div><div><label>Jumlah</label><input id="q" type="number" inputmode="numeric" value="1"></div></div><label>Tanggal</label><input id="d" type="date" value="'+today()+'"><label>Toko / bengkel (opsional)</label><input id="s" list="sl"><datalist id="sl">'+D.shops.map(function(s){return'<option value="'+esc(s.name)+'">'}).join("")+'</datalist><div class="err" id="er"></div><button class="btn w" id="sv" style="margin-top:8px">Simpan</button>');m.querySelector("#sv").onclick=function(){var q=function(i){return m.querySelector(i).value.trim()},p=Math.round(+q("#p")),n=q("#n");if(!n||!(p>0)||!q("#d"))return m.querySelector("#er").textContent="Isi nama barang, harga, dan tanggal.";D.prices.push({name:n,cat:q("#c"),price:p,qty:Math.max(1,+q("#q")||1),date:q("#d"),shop:q("#s")});save();m.remove();render()}}
+function ph(i,t,s){return'<div class="ph"><i class="pi">'+ic(i)+'</i><div><h2>'+t+'</h2><div class="mu">'+s+'</div></div></div>'}
+var ICON="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' fill='#1e88e5'/><g fill='none' stroke='#fff' stroke-linecap='round' stroke-linejoin='round'><path d='M146 232A110 110 0 0 1 366 232' stroke-width='20'/><path d='M160 232h12M188 164l9 9M256 136v12M324 164l-9 9M352 232h-12' stroke-width='10' opacity='.75'/><path d='M256 232L306 188' stroke-width='14'/></g><circle cx='256' cy='232' r='13' fill='#fff'/><g transform='translate(256 340) scale(.84) translate(-256 -340)'><g fill='none' stroke='#fff' stroke-linecap='round' stroke-linejoin='round'><circle cx='150' cy='384' r='36' stroke-width='12'/><circle cx='362' cy='384' r='36' stroke-width='12'/><path d='M362 384L328 294' stroke-width='12'/><path d='M334 288L304 274' stroke-width='10'/><path d='M150 384L214 352' stroke-width='12'/></g><g fill='#fff'><path d='M132 322Q152 308 192 308L248 308Q264 286 302 284L332 288L324 326L298 334L298 374L216 374L216 340L188 332Q156 336 132 322Z'/><circle cx='352' cy='312' r='13'/><circle cx='150' cy='384' r='8'/><circle cx='362' cy='384' r='8'/></g></g></svg>",IMG="data:image/svg+xml,"+encodeURIComponent(ICON),DP=null;
+window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();DP=e;if(tab==="more"&&user)render()});
+window.addEventListener("appinstalled",function(){DP=null});
+function setupPWA(){if("serviceWorker" in navigator&&/^https?:$/.test(location.protocol)){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}}
+function installCard(){var on=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone;return'<div class="card inst"><img src="'+IMG+'" alt=""><div class="gr"><h3>'+(on?"Aplikasi terpasang":"Pasang RideMate")+'</h3><div class="mu">'+(on?"Anda memakai RideMate dari layar utama.":"Buka langsung dari ikon di layar utama.")+'</div></div>'+(on?"":'<button class="btn" data-act="install">Install</button>')+'</div>'}
+function installApp(){if(DP){DP.prompt();DP.userChoice.then(function(){DP=null;render()});return}modal('<h2>Pasang RideMate</h2><p class="mu">Tambahkan ke layar utama lewat menu browser Anda.</p><div class="tp"><i class="pi">'+ic("home")+'</i><div><h4>Android (Chrome)</h4><p>Ketuk menu titik tiga, lalu pilih Instal aplikasi atau Tambahkan ke layar utama.</p></div></div><div class="tp"><i class="pi">'+ic("home")+'</i><div><h4>iPhone (Safari)</h4><p>Ketuk tombol Bagikan, lalu pilih Tambah ke Layar Utama.</p></div></div><p class="mu">Buka tautan RideMate langsung di browser agar opsi ini muncul. Dari dalam aplikasi lain atau tampilan pratinjau, opsinya bisa tidak tersedia.</p>')}
+function pwModal(){var m=modal('<h2>Ubah kata sandi</h2><label>Kata sandi saat ini</label><input id="a" type="password" autocomplete="current-password"><label>Kata sandi baru</label><input id="b" type="password" autocomplete="new-password"><label>Ulangi kata sandi baru</label><input id="c" type="password" autocomplete="new-password"><div class="err" id="er"></div><button class="btn w" id="s" style="margin-top:8px">Simpan</button>');m.querySelector("#s").onclick=function(){var q=function(i){return m.querySelector(i).value},e=m.querySelector("#er"),U=store("rm_users")||{};e.style.color="";if(!U[user]||U[user].pw!==hash(q("#a")))return e.textContent="Kata sandi saat ini salah.";if(q("#b").length<6)return e.textContent="Kata sandi baru minimal 6 karakter.";if(q("#b")!==q("#c"))return e.textContent="Konfirmasi kata sandi tidak cocok.";if(q("#b")===q("#a"))return e.textContent="Kata sandi baru harus berbeda dari yang lama.";U[user].pw=hash(q("#b"));store("rm_users",U);e.style.color="var(--ok)";e.textContent="Kata sandi berhasil diubah.";setTimeout(function(){m.remove()},900)}}
+setupPWA();
+applyPrefs();
+(function(){var s=store("rm_session");if(s&&(store("rm_users")||{})[s]){user=s;load();var h0=curHash();if(VIEWS.indexOf(h0)>-1)tab=h0}render()})();
+</script>
+</body>
+</html>
