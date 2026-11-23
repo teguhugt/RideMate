@@ -1,5 +1,5 @@
 // Ubah angka versi ini setiap kali Anda mengganti file, agar cache lama dibuang.
-const CACHE = "ridemate-v12";
+const CACHE = "ridemate-v13";
 const FILES = ["./", "index.html", "manifest.webmanifest", "icon-192.png", "icon-512.png", "apple-touch-icon.png"];
 
 self.addEventListener("install", (e) => {
